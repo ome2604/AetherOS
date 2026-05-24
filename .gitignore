@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environment
+venv/
+.venv/
+
+# Environment Variables
+.env
+
+# VSCode
+.vscode/
+
+# Pytest
+.pytest_cache/
+
+# Alembic
+*.db
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker
+postgres_data/
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
