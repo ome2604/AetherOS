@@ -17,3 +17,5 @@ langgraph
 websockets
 
 structlog
+
+prometheus-fastapi-instrumentator

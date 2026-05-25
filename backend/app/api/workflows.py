@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.db.deps import get_db
 from app.schemas.workflow import (
     WorkflowCreate,
-    WorkflowResponse,
+    WorkflowResponse
 )
 from app.services.workflow_service import WorkflowService
 from app.tasks.workflow_tasks import execute_workflow
@@ -26,7 +26,9 @@ async def create_workflow(
         workflow.name
     )
 
-    execute_workflow.delay(str(new_workflow.id))
+    execute_workflow.delay(
+        str(new_workflow.id)
+    )
 
     return new_workflow
 

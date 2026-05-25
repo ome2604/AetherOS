@@ -4,6 +4,7 @@ services:
 
   backend-api:
     build: ./backend
+
     container_name: aetheros-backend
 
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -23,6 +24,7 @@ services:
 
   celery-worker:
     build: ./backend
+
     container_name: aetheros-worker
 
     command: celery -A app.core.celery_app.celery_app worker --loglevel=info
@@ -39,6 +41,7 @@ services:
 
   postgres:
     image: postgres:16
+
     container_name: aetheros-postgres
 
     environment:
@@ -54,10 +57,36 @@ services:
 
   redis:
     image: redis:7
+
     container_name: aetheros-redis
 
     ports:
       - "6379:6379"
+
+  prometheus:
+    image: prom/prometheus
+
+    container_name: aetheros-prometheus
+
+    volumes:
+      - ./infrastructure/observability/prometheus.yml:/etc/prometheus/prometheus.yml
+
+    ports:
+      - "9090:9090"
+
+    depends_on:
+      - backend-api
+
+  grafana:
+    image: grafana/grafana
+
+    container_name: aetheros-grafana
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - prometheus
 
 volumes:
   postgres_data:
