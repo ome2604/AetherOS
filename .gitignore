@@ -37,3 +37,18 @@ node_modules/
 # Build
 dist/
 build/
+
+venv/
+__pycache__/
+.pytest_cache/
+.env
+chroma_db/
+*.pyc
+*.pyo
+*.sqlite3
+node_modules/
+dist/
+build/
+coverage/
+.idea/
+.vscode/

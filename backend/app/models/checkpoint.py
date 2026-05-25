@@ -1,13 +1,21 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, String, DateTime, ForeignKey, JSON
+from sqlalchemy import (
+    Column,
+    String,
+    DateTime,
+    ForeignKey,
+    JSON,
+)
+
 from sqlalchemy.dialects.postgresql import UUID
 
 from app.db.base import Base
 
 
 class WorkflowCheckpoint(Base):
+
     __tablename__ = "workflow_checkpoints"
 
     id = Column(

@@ -1,32 +1,25 @@
 from app.orchestrator.state import WorkflowState
 
-
-def start_node(state: WorkflowState):
-
-    print("Starting workflow execution")
-
-    state["status"] = "running"
-
-    return state
+from app.agents.planner import PlannerAgent
+from app.agents.executor import ExecutorAgent
+from app.agents.reviewer import ReviewerAgent
 
 
-def process_node(state: WorkflowState):
-
-    print("Processing workflow")
-
-    user_input = state["input"]
-
-    result = f"AI processed: {user_input}"
-
-    state["output"] = result
-
-    return state
+planner_agent = PlannerAgent()
+executor_agent = ExecutorAgent()
+reviewer_agent = ReviewerAgent()
 
 
-def end_node(state: WorkflowState):
+def planner_node(state: WorkflowState):
 
-    print("Ending workflow")
+    return planner_agent.run(state)
 
-    state["status"] = "completed"
 
-    return state
+def executor_node(state: WorkflowState):
+
+    return executor_agent.run(state)
+
+
+def reviewer_node(state: WorkflowState):
+
+    return reviewer_agent.run(state)

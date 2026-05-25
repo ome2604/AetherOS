@@ -1,37 +1,97 @@
-from sqlalchemy.orm import Session
+from langgraph.graph import (
+    StateGraph,
+)
 
-from app.orchestrator.workflow import workflow_graph
-from app.services.checkpoint_service import (
-    CheckpointService
+from app.orchestrator.state import (
+    WorkflowState,
+)
+
+from app.orchestrator.nodes import (
+    planner_node,
+    executor_node,
+    reviewer_node,
+)
+
+from app.orchestrator.router import (
+    review_router,
 )
 
 
 class WorkflowRuntime:
 
-    @staticmethod
+    def __init__(self):
+
+        self.graph = (
+            self._build_graph()
+        )
+
+    def _build_graph(self):
+
+        workflow = StateGraph(
+            WorkflowState
+        )
+
+        # -----------------------------------
+        # NODES
+        # -----------------------------------
+
+        workflow.add_node(
+            "planner",
+            planner_node,
+        )
+
+        workflow.add_node(
+            "executor",
+            executor_node,
+        )
+
+        workflow.add_node(
+            "reviewer",
+            reviewer_node,
+        )
+
+        # -----------------------------------
+        # ENTRY
+        # -----------------------------------
+
+        workflow.set_entry_point(
+            "planner"
+        )
+
+        # -----------------------------------
+        # EDGES
+        # -----------------------------------
+
+        workflow.add_edge(
+            "planner",
+            "executor",
+        )
+
+        workflow.add_edge(
+            "executor",
+            "reviewer",
+        )
+
+        # -----------------------------------
+        # CONDITIONAL ROUTING
+        # -----------------------------------
+
+        workflow.add_conditional_edges(
+            "reviewer",
+            review_router,
+            {
+                "retry": "executor",
+                "complete": "__end__",
+            },
+        )
+
+        return workflow.compile()
+
     def execute(
-        db: Session,
-        initial_state
+        self,
+        initial_state: WorkflowState,
     ):
 
-        workflow_id = initial_state["workflow_id"]
-
-        CheckpointService.create_checkpoint(
-            db,
-            workflow_id,
-            "START",
+        return self.graph.invoke(
             initial_state
         )
-
-        result = workflow_graph.invoke(
-            initial_state
-        )
-
-        CheckpointService.create_checkpoint(
-            db,
-            workflow_id,
-            "END",
-            result
-        )
-
-        return result

@@ -1,24 +1,48 @@
-import json
+from uuid import UUID
 
 from sqlalchemy.orm import Session
 
 from app.models.checkpoint import WorkflowCheckpoint
+from app.orchestrator.state import WorkflowState
+
+
+def serialize_state(data):
+
+    if isinstance(data, UUID):
+
+        return str(data)
+
+    if isinstance(data, dict):
+
+        return {
+            key: serialize_state(value)
+            for key, value in data.items()
+        }
+
+    if isinstance(data, list):
+
+        return [
+            serialize_state(item)
+            for item in data
+        ]
+
+    return data
 
 
 class CheckpointService:
 
     @staticmethod
-    def create_checkpoint(
+    def save_checkpoint(
         db: Session,
-        workflow_id,
-        node_name,
-        state_data
+        state: WorkflowState,
     ):
 
+        serialized_state = serialize_state(state)
+
         checkpoint = WorkflowCheckpoint(
-            workflow_id=workflow_id,
-            node_name=node_name,
-            state_data=json.dumps(state_data)
+            workflow_id=state["workflow_id"],
+            node_name=state["current_node"],
+            state=serialized_state,
         )
 
         db.add(checkpoint)
@@ -28,20 +52,3 @@ class CheckpointService:
         db.refresh(checkpoint)
 
         return checkpoint
-
-    @staticmethod
-    def get_latest_checkpoint(
-        db: Session,
-        workflow_id
-    ):
-
-        return (
-            db.query(WorkflowCheckpoint)
-            .filter(
-                WorkflowCheckpoint.workflow_id == workflow_id
-            )
-            .order_by(
-                WorkflowCheckpoint.created_at.desc()
-            )
-            .first()
-        )

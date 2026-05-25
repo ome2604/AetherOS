@@ -1,18 +1,40 @@
 from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 
-from app.api.routes.workflows import router as workflow_router
+from app.api.routes.workflows import (
+    router as workflow_router,
+)
+
+from app.api.routes.websocket import (
+    router as websocket_router,
+)
+
+app = FastAPI(
+    title="AetherOS API"
+)
 
 
-app = FastAPI(title="AetherOS API")
+@app.get("/")
+def root():
+
+    return {
+        "message": "AetherOS Runtime Active"
+    }
 
 
 @app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
+def health_check():
+
+    return {
+        "status": "ok"
+    }
 
 
-app.include_router(workflow_router, prefix="/workflow")
+# ROUTERS
+app.include_router(workflow_router)
+
+app.include_router(websocket_router)
 
 
+# METRICS
 Instrumentator().instrument(app).expose(app)
