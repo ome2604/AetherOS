@@ -1,14 +1,19 @@
 from uuid import uuid4
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-from app.orchestrator.workflow import workflow_graph
+from app.db.deps import get_db
+from app.orchestrator.runtime import WorkflowRuntime
 
 router = APIRouter()
 
 
 @router.post("/execute")
-async def execute_workflow(payload: dict):
+async def execute_workflow(
+    payload: dict,
+    db: Session = Depends(get_db)
+):
 
     workflow_id = str(uuid4())
 
@@ -19,7 +24,10 @@ async def execute_workflow(payload: dict):
         "status": "pending",
     }
 
-    result = workflow_graph.invoke(initial_state)
+    result = WorkflowRuntime.execute(
+        db,
+        initial_state
+    )
 
     return {
         "workflow_id": workflow_id,
