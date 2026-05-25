@@ -1,495 +1,223 @@
-# System Architecture
+# AetherOS — System Design Document
 
-# Architecture Philosophy
+# Version
+1.0
 
-Infrastructure-first AI platform.
+# Status
+ACTIVE
 
-Priorities:
-1. durability
-2. scalability
-3. observability
-4. distributed execution
-5. recoverability
+# Objective
+
+AetherOS is an enterprise-grade AI workflow orchestration platform designed to support:
+
+- asynchronous workflow execution
+- distributed task processing
+- durable execution state
+- observability
+- realtime orchestration
+- scalable AI runtime infrastructure
+
+The platform acts as an AI Operating System capable of orchestrating complex workflow execution pipelines.
+
+---
 
 # High-Level Architecture
 
-Frontend (Next.js)
+Frontend Client
 ↓
-FastAPI API Gateway
+FastAPI Gateway
 ↓
-Workflow Runtime Layer
+LangGraph Workflow Engine
 ↓
-Distributed Worker Layer
+Celery Distributed Workers
 ↓
-Persistence + Memory Layer
-
-# Core Services
-
-| Service | Responsibility |
-|---|---|
-| Frontend | UI + Realtime updates |
-| FastAPI | API gateway |
-| Celery Workers | Background execution |
-| Redis | Queue + Pub/Sub |
-| PostgreSQL | Durable persistence |
-| LangGraph | Workflow orchestration |
-| Qdrant | Vector memory |
-| WebSockets | Realtime streaming |
-
-# Workflow Execution Flow
-
-User Request
+Redis Queue Layer
 ↓
-FastAPI API
-↓
-Workflow persisted in PostgreSQL
-↓
-Task pushed to Redis
-↓
-Celery worker consumes task
-↓
-LangGraph executes workflow
-↓
-Checkpoint persisted
-↓
-Events streamed to frontend
+PostgreSQL Persistence Layer
 
-# Infrastructure Principles
-
-## Principle 1
-Never keep critical state only in memory.
-
-## Principle 2
-Every workflow must be resumable.
-
-## Principle 3
-Workers must remain stateless.
-
-## Principle 4
-All services must be independently scalable.
-
-# AetherOS — System Design & Architecture Decisions
-
-# Purpose
-
-This document explains:
-- architectural decisions
-- technology selection reasoning
-- infrastructure tradeoffs
-- scalability considerations
-- enterprise engineering philosophy
-
-The purpose is to ensure:
-- long-term scalability
-- durability
-- operational reliability
-- distributed execution readiness
+Supporting Systems:
+- Prometheus
+- Grafana
+- Docker Infrastructure
 
 ---
 
-# 1. Why FastAPI?
+# Core Architectural Principles
 
-## Decision
-Use FastAPI as backend API framework.
+## 1. Infrastructure First
 
-## Why?
+The system prioritizes:
+- scalability
+- observability
+- modularity
+- distributed execution
 
-AetherOS requires:
-- async request handling
-- high concurrency
-- AI inference integration
-- realtime communication
-- modern Python ecosystem compatibility
-
-FastAPI provides:
-- ASGI async runtime
-- high performance
-- native type validation
-- OpenAPI generation
-- modern async architecture
+before feature expansion.
 
 ---
 
-## Why NOT Django?
+## 2. Durable State Management
 
-Django is:
-- monolithic
-- synchronous-first
-- heavily coupled
+All workflows maintain persistent state inside PostgreSQL.
 
-AetherOS requires:
-- distributed runtime flexibility
-- infrastructure-first architecture
-- lightweight service boundaries
-
-FastAPI is better suited for:
-- orchestration systems
-- AI platforms
-- async backend services
+This enables:
+- workflow recovery
+- resumable execution
+- auditability
+- historical analytics
 
 ---
 
-## Scalability Benefits
+## 3. Distributed Execution
 
-FastAPI supports:
-- async concurrency
-- websocket streaming
-- distributed service integration
-- microservice decomposition
+Celery workers separate long-running execution from API requests.
 
-This is critical for:
-- workflow orchestration
-- AI task execution
-- realtime event systems
+Benefits:
+- non-blocking APIs
+- scalable background processing
+- horizontal scaling
+- fault isolation
 
 ---
 
-# 2. Why PostgreSQL?
+## 4. Queue-Based Orchestration
 
-## Decision
-Use PostgreSQL as primary durable database.
+Redis acts as:
+- broker
+- execution queue
+- lightweight runtime coordination layer
 
-## Why?
-
-AetherOS requires:
-- transactional consistency
-- durable workflow state
-- relational integrity
-- schema evolution
-- production reliability
-
-PostgreSQL provides:
-- ACID compliance
-- strong consistency
-- mature indexing
-- JSON support
-- advanced querying
-- production-grade reliability
+This architecture decouples:
+- request ingestion
+- execution lifecycle
 
 ---
 
-## Why NOT MongoDB?
-
-MongoDB is useful for:
-- flexible document storage
-
-But orchestration systems require:
-- durable state transitions
-- transactional guarantees
-- relational workflow integrity
-
-Workflow engines require:
-- correctness
-- consistency
-- resumability
-
-PostgreSQL is superior for:
-- workflow persistence
-- orchestration metadata
-- execution history
-
----
-
-## Enterprise Benefits
-
-PostgreSQL supports:
-- partitioning
-- replication
-- indexing strategies
-- transactional durability
-- production scaling
-
-This is essential for:
-- enterprise orchestration systems
-- multi-tenant platforms
-
----
-
-# 3. Why Redis?
-
-## Decision
-Use Redis for:
-- queue broker
-- caching
-- Pub/Sub
-- event streaming
-
----
-
-## Why?
-
-AetherOS requires:
-- low-latency communication
-- distributed worker coordination
-- realtime event propagation
-- temporary runtime state
-
-Redis provides:
-- in-memory performance
-- Pub/Sub messaging
-- queue primitives
-- distributed coordination
-
----
-
-## Why NOT PostgreSQL Queues?
-
-Database queues create:
-- contention
-- locking overhead
-- slower task distribution
-
-Redis is optimized for:
-- high-throughput task dispatching
-- distributed execution coordination
-
----
-
-## Enterprise Benefits
-
-Redis becomes foundation for:
-- Celery workers
-- websocket events
-- distributed caching
-- workflow coordination
-
----
-
-# 4. Why Celery?
-
-## Decision
-Use Celery for distributed background execution.
-
----
-
-## Why?
-
-AetherOS workflows are:
-- long-running
-- asynchronous
-- AI-intensive
-- failure-prone
-
-HTTP request lifecycle is NOT suitable for:
-- multi-minute AI workflows
-- distributed orchestration
-- retryable execution
-
-Celery provides:
-- distributed workers
-- retries
-- task queues
-- async execution
-- workload isolation
-
----
-
-## Why NOT FastAPI BackgroundTasks?
-
-FastAPI BackgroundTasks are:
-- process-local
-- non-durable
-- not distributed
-- not fault tolerant
-
-AetherOS requires:
-- durable execution
-- worker scalability
-- execution persistence
-
-Celery is enterprise-grade infrastructure.
-
----
-
-# 5. Why LangGraph?
-
-## Decision
-Use LangGraph for workflow orchestration runtime.
-
----
-
-## Why?
-
-AetherOS requires:
-- stateful workflows
-- graph execution
-- resumability
-- checkpointing
-- agent orchestration
+## 5. Stateful Workflow Orchestration
 
 LangGraph provides:
-- graph-native execution
-- durable state transitions
-- orchestration semantics
-- workflow checkpointing
+- workflow state transitions
+- execution graph management
+- multi-step orchestration
+- future multi-agent support
 
 ---
 
-## Why NOT Basic LangChain Chains?
+# Technology Decisions
 
-Simple chains are:
-- linear
-- stateless
-- hard to recover
-- difficult to orchestrate
-
-Enterprise orchestration requires:
-- graph-based runtime
-- execution state management
-- resumability
-
----
-
-# 6. Why Docker?
-
-## Decision
-Use Docker for service isolation and reproducibility.
+| Technology | Purpose |
+|---|---|
+| FastAPI | API runtime |
+| PostgreSQL | Durable persistence |
+| Redis | Queue + runtime coordination |
+| Celery | Distributed task execution |
+| LangGraph | Workflow orchestration |
+| Docker | Infrastructure portability |
+| Prometheus | Metrics collection |
+| Grafana | Observability dashboards |
 
 ---
 
-## Why?
+# Execution Lifecycle
 
-AetherOS requires:
-- reproducible environments
-- isolated services
-- deployment portability
-- operational consistency
+## Step 1 — Workflow Request
 
-Docker provides:
-- container isolation
-- consistent runtime environments
-- deployment reproducibility
+Client submits workflow request through FastAPI.
 
 ---
 
-## Enterprise Benefits
+## Step 2 — Workflow Persistence
 
-Docker enables:
-- CI/CD pipelines
-- Kubernetes deployment
-- distributed infrastructure
-- environment consistency
-
-This is foundational for:
-- scalable backend systems
+Workflow state persisted into PostgreSQL.
 
 ---
 
-# 7. Why Workflow Persistence?
+## Step 3 — Task Dispatch
 
-## Decision
-Persist workflow state in PostgreSQL.
-
----
-
-## Why?
-
-AI workflows can:
-- fail
-- timeout
-- partially complete
-- require retries
-
-Without persistence:
-- execution state is lost
-- workflows become unrecoverable
-
-Persistence enables:
-- resumability
-- durability
-- observability
-- execution history
+Celery task dispatched into Redis queue.
 
 ---
 
-# 8. Why Event Streaming?
+## Step 4 — Worker Execution
 
-## Decision
-Implement realtime workflow event streaming.
-
----
-
-## Why?
-
-Enterprise orchestration systems require:
-- realtime visibility
-- execution monitoring
-- workflow progress updates
-
-Realtime streaming enables:
-- operational observability
-- frontend synchronization
-- workflow debugging
+Worker consumes task and executes LangGraph workflow.
 
 ---
 
-# 9. Why Infrastructure-First Architecture?
+## Step 5 — State Updates
 
-## Decision
-Prioritize infrastructure before advanced AI features.
-
----
-
-## Why?
-
-Most AI projects fail because:
-- infrastructure is weak
-- workflows are non-durable
-- orchestration is unreliable
-- state management is poor
-
-AetherOS prioritizes:
-- durability
-- reliability
-- distributed execution
-- operational engineering
-
-before advanced AI capability.
+Workflow execution state continuously updated.
 
 ---
 
-# 10. System Architecture Philosophy
+## Step 6 — Completion
 
-AetherOS is designed as:
-- distributed orchestration platform
-- durable workflow runtime
-- infrastructure-first AI system
-
-NOT:
-- demo chatbot
-- CRUD application
-- monolithic AI wrapper
+Workflow finalized with:
+- status
+- timestamps
+- execution results
 
 ---
 
-# Long-Term Architecture Goals
+# Scalability Strategy
 
-Future architecture will support:
-- distributed workers
-- durable execution
-- multi-tenant isolation
-- enterprise RAG
-- observability
-- realtime orchestration
-- AI workflow automation
+The platform supports horizontal scaling through:
+
+- stateless API containers
+- multiple Celery workers
+- distributed Redis queue
+- container orchestration compatibility
+
+Future Kubernetes deployment supported.
 
 ---
 
-# Engineering Philosophy
+# Observability Strategy
 
-The architecture prioritizes:
-1. durability
-2. scalability
-3. recoverability
-4. observability
-5. operational reliability
+The platform includes:
+- Prometheus metrics
+- Grafana dashboards
+- container monitoring
+- runtime telemetry
 
-over:
-- rapid feature shipping
-- demo-oriented shortcuts
-- temporary architecture
+Future additions:
+- OpenTelemetry
+- distributed tracing
+- centralized logging
 
-This aligns with:
-- enterprise platform engineering
-- production AI infrastructure
-- scalable orchestration systems
+---
+
+# Security Strategy
+
+Planned security architecture:
+- JWT authentication
+- RBAC
+- API rate limiting
+- secret management
+- audit logging
+
+---
+
+# Future Architecture Expansion
+
+Planned roadmap:
+- multi-agent orchestration
+- memory systems
+- realtime streaming
+- DAG visualization
+- execution replay
+- AI planner systems
+- autonomous orchestration
+
+---
+
+# Current Maturity
+
+Current platform maturity:
+- distributed runtime initialized
+- orchestration engine operational
+- persistence operational
+- observability operational
+
+Platform phase:
+FOUNDATION COMPLETE
