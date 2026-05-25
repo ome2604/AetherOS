@@ -13,6 +13,9 @@ pydantic
 pydantic-settings
 
 langgraph
+langchain
+langchain-openai
+openai
 
 websockets
 
