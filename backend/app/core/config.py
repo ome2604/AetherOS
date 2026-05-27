@@ -1,27 +1,26 @@
-from functools import lru_cache
-
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
 
-    DATABASE_URL: str
+    DATABASE_URL: str = (
+        "postgresql://postgres:postgres@localhost:5432/aetheros"
+    )
 
-    REDIS_URL: str
+    OPENAI_API_KEY: str = ""
 
-    SECRET_KEY: str
+    REDIS_HOST: str = "localhost"
 
-    OPENAI_API_KEY: str
+    REDIS_PORT: int = 6379
+
+    REDIS_URL: str = (
+        "redis://localhost:6379/0"
+    )
 
     class Config:
-
         env_file = ".env"
 
 
-@lru_cache
-def get_settings():
+settings = Settings()
 
-    return Settings()
-
-
-settings = get_settings()
+print(settings.DATABASE_URL)

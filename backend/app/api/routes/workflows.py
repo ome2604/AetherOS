@@ -5,8 +5,12 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.db.session import SessionLocal
+
 from app.models.workflow import Workflow
-from app.orchestrator.runtime import WorkflowRuntime
+
+from app.workers.workflow_tasks import (
+    execute_workflow,
+)
 
 router = APIRouter()
 
@@ -16,7 +20,9 @@ class WorkflowRequest(BaseModel):
 
 
 @router.post("/workflows")
-def create_workflow(request: WorkflowRequest):
+def create_workflow(
+    request: WorkflowRequest,
+):
 
     db: Session = SessionLocal()
 
@@ -26,8 +32,10 @@ def create_workflow(request: WorkflowRequest):
 
         workflow = Workflow(
             id=workflow_id,
+
             name=request.task,
-            status="running",
+
+            status="pending",
         )
 
         db.add(workflow)
@@ -36,41 +44,58 @@ def create_workflow(request: WorkflowRequest):
 
         db.refresh(workflow)
 
-        initial_state = {
-            "workflow_id": str(workflow_id),
-            "status": "pending",
-            "current_node": "planner",
-            "input_data": {
-                "task": request.task
-            },
-            "execution_plan": None,
-            "execution_result": None,
-            "review_status": None,
-            "retry_count": 0,
-        }
-
-        runtime = WorkflowRuntime()
-
-        result = runtime.execute(initial_state)
-
-        workflow.status = "completed"
-
-        db.commit()
+        execute_workflow.delay(
+            str(workflow_id),
+            request.task,
+        )
 
         return {
-            "workflow_id": str(workflow_id),
-            "result": result,
+            "workflow_id": str(
+                workflow_id
+            ),
+
+            "status": "queued",
         }
 
     except Exception as e:
 
-        workflow.status = "failed"
-
-        db.commit()
+        db.rollback()
 
         return {
             "error": str(e)
         }
+
+    finally:
+
+        db.close()
+
+
+@router.get("/workflows")
+def get_workflows():
+
+    db: Session = SessionLocal()
+
+    try:
+
+        workflows = (
+            db.query(Workflow)
+            .all()
+        )
+
+        return [
+            {
+                "id": str(
+                    workflow.id
+                ),
+
+                "name": workflow.name,
+
+                "status": workflow.status,
+
+                "created_at": workflow.created_at,
+            }
+            for workflow in workflows
+        ]
 
     finally:
 

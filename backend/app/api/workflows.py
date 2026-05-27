@@ -7,7 +7,7 @@ from app.schemas.workflow import (
     WorkflowResponse
 )
 from app.services.workflow_service import WorkflowService
-from app.tasks.workflow_tasks import execute_workflow
+from AetherOS.backend.app.workers.workflow_tasks import execute_workflow
 
 router = APIRouter()
 

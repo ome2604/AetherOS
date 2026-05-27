@@ -1,32 +1,12 @@
-from uuid import UUID
-
 from sqlalchemy.orm import Session
 
-from app.models.checkpoint import WorkflowCheckpoint
-from app.orchestrator.state import WorkflowState
+from app.models.workflow_checkpoint import (
+    WorkflowCheckpoint,
+)
 
-
-def serialize_state(data):
-
-    if isinstance(data, UUID):
-
-        return str(data)
-
-    if isinstance(data, dict):
-
-        return {
-            key: serialize_state(value)
-            for key, value in data.items()
-        }
-
-    if isinstance(data, list):
-
-        return [
-            serialize_state(item)
-            for item in data
-        ]
-
-    return data
+from app.repositories.checkpoint_repository import (
+    CheckpointRepository,
+)
 
 
 class CheckpointService:
@@ -34,21 +14,39 @@ class CheckpointService:
     @staticmethod
     def save_checkpoint(
         db: Session,
-        state: WorkflowState,
+        workflow_id: str,
+        node_name: str,
+        workflow_state: dict,
+        status: str,
+        retry_count: int = 0,
     ):
 
-        serialized_state = serialize_state(state)
-
         checkpoint = WorkflowCheckpoint(
-            workflow_id=state["workflow_id"],
-            node_name=state["current_node"],
-            state=serialized_state,
+            workflow_id=workflow_id,
+
+            node_name=node_name,
+
+            workflow_state=workflow_state,
+
+            status=status,
+
+            retry_count=str(retry_count),
         )
 
-        db.add(checkpoint)
+        return CheckpointRepository.create(
+            db,
+            checkpoint,
+        )
 
-        db.commit()
+    @staticmethod
+    def get_latest_checkpoint(
+        db: Session,
+        workflow_id: str,
+    ):
 
-        db.refresh(checkpoint)
-
-        return checkpoint
+        return (
+            CheckpointRepository.get_latest(
+                db,
+                workflow_id,
+            )
+        )

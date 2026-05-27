@@ -1,19 +1,7 @@
-from langgraph.graph import (
-    StateGraph,
-)
-
-from app.orchestrator.state import (
-    WorkflowState,
-)
-
 from app.orchestrator.nodes import (
     planner_node,
     executor_node,
     reviewer_node,
-)
-
-from app.orchestrator.router import (
-    review_router,
 )
 
 
@@ -21,77 +9,41 @@ class WorkflowRuntime:
 
     def __init__(self):
 
-        self.graph = (
-            self._build_graph()
-        )
+        self.node_map = {
 
-    def _build_graph(self):
+            "planner": planner_node,
 
-        workflow = StateGraph(
-            WorkflowState
-        )
+            "executor": executor_node,
 
-        # -----------------------------------
-        # NODES
-        # -----------------------------------
-
-        workflow.add_node(
-            "planner",
-            planner_node,
-        )
-
-        workflow.add_node(
-            "executor",
-            executor_node,
-        )
-
-        workflow.add_node(
-            "reviewer",
-            reviewer_node,
-        )
-
-        # -----------------------------------
-        # ENTRY
-        # -----------------------------------
-
-        workflow.set_entry_point(
-            "planner"
-        )
-
-        # -----------------------------------
-        # EDGES
-        # -----------------------------------
-
-        workflow.add_edge(
-            "planner",
-            "executor",
-        )
-
-        workflow.add_edge(
-            "executor",
-            "reviewer",
-        )
-
-        # -----------------------------------
-        # CONDITIONAL ROUTING
-        # -----------------------------------
-
-        workflow.add_conditional_edges(
-            "reviewer",
-            review_router,
-            {
-                "retry": "executor",
-                "complete": "__end__",
-            },
-        )
-
-        return workflow.compile()
+            "reviewer": reviewer_node,
+        }
 
     def execute(
         self,
-        initial_state: WorkflowState,
+        state: dict,
     ):
 
-        return self.graph.invoke(
-            initial_state
+        current_node = state.get(
+            "current_node",
+            "planner",
         )
+
+        while current_node != "completed":
+
+            node_executor = self.node_map.get(
+                current_node
+            )
+
+            if not node_executor:
+
+                raise Exception(
+                    f"Unknown node: {current_node}"
+                )
+
+            state = node_executor(state)
+
+            current_node = state.get(
+                "current_node"
+            )
+
+        return state

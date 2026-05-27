@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.routes.workflows import (
@@ -10,31 +12,55 @@ from app.api.routes.websocket import (
 )
 
 app = FastAPI(
-    title="AetherOS API"
+    title="AetherOS",
 )
 
+# =========================
+# CORS
+# =========================
 
-@app.get("/")
-def root():
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
-    return {
-        "message": "AetherOS Runtime Active"
-    }
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
 
+    allow_credentials=True,
 
-@app.get("/health")
-def health_check():
+    allow_methods=["*"],
 
-    return {
-        "status": "ok"
-    }
+    allow_headers=["*"],
+)
 
+# =========================
+# ROUTES
+# =========================
 
-# ROUTERS
 app.include_router(workflow_router)
 
 app.include_router(websocket_router)
 
-
+# =========================
 # METRICS
+# =========================
+
 Instrumentator().instrument(app).expose(app)
+
+# =========================
+# HEALTH
+# =========================
+
+@app.get("/")
+def root():
+    return {
+        "message": "AetherOS Running"
+    }
+
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy"
+    }

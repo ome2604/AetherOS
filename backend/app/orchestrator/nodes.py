@@ -1,25 +1,57 @@
-from app.orchestrator.state import WorkflowState
+def planner_node(
+    state: dict,
+):
 
-from app.agents.planner import PlannerAgent
-from app.agents.executor import ExecutorAgent
-from app.agents.reviewer import ReviewerAgent
+    task = (
+        state["input_data"]
+        .get("task")
+    )
 
+    state["execution_plan"] = {
+        "plan":
+            f"Execution plan created for: {task}"
+    }
 
-planner_agent = PlannerAgent()
-executor_agent = ExecutorAgent()
-reviewer_agent = ReviewerAgent()
+    state["current_node"] = "executor"
 
-
-def planner_node(state: WorkflowState):
-
-    return planner_agent.run(state)
-
-
-def executor_node(state: WorkflowState):
-
-    return executor_agent.run(state)
+    return state
 
 
-def reviewer_node(state: WorkflowState):
+def executor_node(
+    state: dict,
+):
 
-    return reviewer_agent.run(state)
+    plan = (
+        state["execution_plan"]
+        .get("plan")
+    )
+
+    state["execution_result"] = {
+        "result":
+            f"Executed: {plan}"
+    }
+
+    state["current_node"] = "reviewer"
+
+    return state
+
+
+def reviewer_node(
+    state: dict,
+):
+
+    result = (
+        state["execution_result"]
+        .get("result")
+    )
+
+    state["review_status"] = {
+        "review":
+            f"Reviewed result: {result}"
+    }
+
+    state["current_node"] = "completed"
+
+    state["status"] = "completed"
+
+    return state

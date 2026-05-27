@@ -1,54 +1,41 @@
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
 *.pyd
-*.so
+*.sqlite3
 
-# Virtual Environment
+# Virtual Env
 venv/
-.venv/
-
-# Environment Variables
 .env
 
-# VSCode
-.vscode/
-
-# Pytest
-.pytest_cache/
-
-# Alembic
-*.db
-
-# OS Files
-.DS_Store
-Thumbs.db
+# Node
+node_modules/
+.next/
 
 # Logs
 *.log
 
-# Docker
-postgres_data/
+# OS
+.DS_Store
+Thumbs.db
 
-# Node
-node_modules/
-
-# Build
-dist/
-build/
-
-venv/
-__pycache__/
-.pytest_cache/
-.env
-chroma_db/
-*.pyc
-*.pyo
-*.sqlite3
-node_modules/
-dist/
-build/
-coverage/
-.idea/
+# IDE
 .vscode/
+.idea/
+
+# Environment
+.env.local
+
+# Docker
+docker-data/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Alembic
+alembic/versions/__pycache__/
+
+# Redis
+dump.rdb

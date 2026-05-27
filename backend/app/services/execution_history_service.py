@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.models.checkpoint import WorkflowCheckpoint
+from AetherOS.backend.app.models.workflow_checkpoint import WorkflowCheckpoint
 
 
 class ExecutionHistoryService:
