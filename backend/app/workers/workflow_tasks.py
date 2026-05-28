@@ -1,15 +1,22 @@
-from app.workers.celery_app import celery
+import asyncio
+import time
 
-from app.orchestrator.runtime import (
-    WorkflowRuntime,
+from datetime import datetime
+
+from celery import Celery
+
+from sqlalchemy.orm import Session
+
+from app.db.session import (
+    SessionLocal,
 )
 
-from app.db.session import SessionLocal
+from app.runtime.event_manager import (
+    EventManager,
+)
 
-from app.models.workflow import Workflow
-
-from app.services.event_bus import (
-    EventBus,
+from app.runtime.snapshot_manager import (
+    SnapshotManager,
 )
 
 from app.runtime.recovery_manager import (
@@ -20,56 +27,81 @@ from app.runtime.resume_engine import (
     ResumeEngine,
 )
 
-from app.runtime.snapshot_manager import (
-    SnapshotManager,
+from app.langgraph.durable_runtime import (
+    DurableLangGraphRuntime,
+)
+
+from app.models.workflow import (
+    Workflow,
+)
+
+from app.services.event_service import (
+    EventService,
+)
+
+from app.services.runtime_metric_service import (
+    RuntimeMetricService,
+)
+
+celery_app = Celery(
+
+    "workflow_tasks",
+
+    broker="redis://localhost:6379/0",
+
+    backend="redis://localhost:6379/0",
 )
 
 
-@celery.task(
-    bind=True,
-
-    autoretry_for=(Exception,),
-
-    retry_backoff=True,
-
-    retry_kwargs={"max_retries": 3},
-)
+@celery_app.task
 def execute_workflow(
-    self,
+
     workflow_id: str,
+
     task: str,
 ):
 
-    db = SessionLocal()
+    # =====================================
+    # METRICS START TIMER
+    # =====================================
+
+    workflow_start_time = time.time()
+
+    db: Session = SessionLocal()
 
     workflow = None
 
     try:
 
+        # =====================================
+        # LOAD WORKFLOW
+        # =====================================
+
         workflow = (
-            db.query(Workflow)
+
+            db.query(
+                Workflow
+            )
+
             .filter(
                 Workflow.id == workflow_id
             )
+
             .first()
         )
 
-        if not workflow:
-            return
+        if workflow:
 
-        workflow.status = "running"
+            workflow.status = "running"
 
-        db.commit()
+            db.commit()
 
-        EventBus.publish_workflow_event(
-            workflow_id,
-            "workflow_started",
-            {
-                "status": "running"
-            },
-        )
+        # =====================================
+        # RECOVERY LOGIC
+        # =====================================
 
         recovered = (
+
             RecoveryManager
             .recover_workflow(
                 db,
@@ -80,6 +112,7 @@ def execute_workflow(
         if recovered:
 
             next_node = (
+
                 ResumeEngine
                 .determine_resume_node(
                     recovered
@@ -115,76 +148,70 @@ def execute_workflow(
                 "review_status": None,
             }
 
-        runtime = WorkflowRuntime()
+        # =====================================
+        # WORKFLOW STARTED EVENT
+        # =====================================
 
-        result = runtime.execute(
-            initial_state
+        workflow_started_payload = {
+
+            "event": "workflow_started",
+
+            "workflow_id": workflow_id,
+
+            "status": "running",
+
+            "timestamp": (
+                datetime.utcnow()
+                .isoformat()
+            ),
+        }
+
+        asyncio.run(
+
+            EventManager.broadcast(
+
+                workflow_id,
+
+                workflow_started_payload,
+            )
         )
 
-        current_node = result.get(
-            "current_node",
-            "completed",
-        )
+        EventService.persist_event(
 
-        SnapshotManager.persist_snapshot(
             db=db,
 
             workflow_id=workflow_id,
 
-            node_name=current_node,
+            event_type="workflow_started",
 
-            state=result,
+            node_name=None,
 
             status="running",
+
+            payload=workflow_started_payload,
         )
 
-        if current_node == "planner":
+        # =====================================
+        # EXECUTE DURABLE RUNTIME
+        # =====================================
 
-            SnapshotManager.persist_snapshot(
-                db=db,
+        runtime = (
+            DurableLangGraphRuntime(db)
+        )
 
-                workflow_id=workflow_id,
+        result = runtime.execute(
 
-                node_name="planner",
+            workflow_id=workflow_id,
 
-                state=result,
+            initial_state=initial_state,
+        )
 
-                status="running",
-            )
-
-        elif current_node == "executor":
-
-            SnapshotManager.persist_snapshot(
-                db=db,
-
-                workflow_id=workflow_id,
-
-                node_name="executor",
-
-                state=result,
-
-                status="running",
-            )
-
-        elif current_node == "reviewer":
-
-            SnapshotManager.persist_snapshot(
-                db=db,
-
-                workflow_id=workflow_id,
-
-                node_name="reviewer",
-
-                state=result,
-
-                status="running",
-            )
-
-        workflow.status = "completed"
-
-        db.commit()
+        # =====================================
+        # FINAL SNAPSHOT
+        # =====================================
 
         SnapshotManager.persist_snapshot(
+
             db=db,
 
             workflow_id=workflow_id,
@@ -196,19 +223,103 @@ def execute_workflow(
             status="completed",
         )
 
-        EventBus.publish_workflow_event(
-            workflow_id,
-            "workflow_completed",
-            {
-                "status": "completed",
+        # =====================================
+        # WORKFLOW COMPLETED EVENT
+        # =====================================
 
-                "result": result,
-            },
+        workflow_completed_payload = {
+
+            "event": (
+                "workflow_completed"
+            ),
+
+            "workflow_id": workflow_id,
+
+            "node": "completed",
+
+            "status": "completed",
+
+            "timestamp": (
+                datetime.utcnow()
+                .isoformat()
+            ),
+
+            "result": result,
+        }
+
+        asyncio.run(
+
+            EventManager.broadcast(
+
+                workflow_id,
+
+                workflow_completed_payload,
+            )
         )
+
+        EventService.persist_event(
+
+            db=db,
+
+            workflow_id=workflow_id,
+
+            event_type="workflow_completed",
+
+            node_name="completed",
+
+            status="completed",
+
+            payload=workflow_completed_payload,
+        )
+
+        # =====================================
+        # RECORD METRICS
+        # =====================================
+
+        workflow_duration = (
+            time.time()
+            - workflow_start_time
+        )
+
+        RuntimeMetricService.record_metric(
+
+            db=db,
+
+            workflow_id=workflow_id,
+
+            metric_name="workflow_duration_seconds",
+
+            metric_value=workflow_duration,
+        )
+
+        RuntimeMetricService.record_metric(
+
+            db=db,
+
+            workflow_id=workflow_id,
+
+            metric_name="workflow_success_total",
+
+            metric_value=1,
+        )
+
+        # =====================================
+        # UPDATE WORKFLOW STATUS
+        # =====================================
+
+        if workflow:
+
+            workflow.status = "completed"
+
+            db.commit()
 
         return result
 
     except Exception as e:
+
+        # =====================================
+        # FAILED STATUS
+        # =====================================
 
         if workflow:
 
@@ -216,31 +327,69 @@ def execute_workflow(
 
             db.commit()
 
-            SnapshotManager.persist_snapshot(
-                db=db,
+        # =====================================
+        # FAILURE EVENT
+        # =====================================
 
-                workflow_id=workflow_id,
+        workflow_failed_payload = {
 
-                node_name="failed",
+            "event": (
+                "workflow_failed"
+            ),
 
-                state={
-                    "error": str(e)
-                },
+            "workflow_id": workflow_id,
 
-                status="failed",
+            "status": "failed",
+
+            "timestamp": (
+                datetime.utcnow()
+                .isoformat()
+            ),
+
+            "error": str(e),
+        }
+
+        asyncio.run(
+
+            EventManager.broadcast(
+
+                workflow_id,
+
+                workflow_failed_payload,
             )
-
-        EventBus.publish_workflow_event(
-            workflow_id,
-            "workflow_failed",
-            {
-                "status": "failed",
-
-                "error": str(e),
-            },
         )
 
-        raise self.retry(exc=e)
+        EventService.persist_event(
+
+            db=db,
+
+            workflow_id=workflow_id,
+
+            event_type="workflow_failed",
+
+            node_name=None,
+
+            status="failed",
+
+            payload=workflow_failed_payload,
+        )
+
+        # =====================================
+        # FAILURE METRICS
+        # =====================================
+
+        RuntimeMetricService.record_metric(
+
+            db=db,
+
+            workflow_id=workflow_id,
+
+            metric_name="workflow_failure_total",
+
+            metric_value=1,
+        )
+
+        raise e
 
     finally:
 

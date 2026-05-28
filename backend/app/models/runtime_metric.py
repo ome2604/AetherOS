@@ -5,6 +5,7 @@ from datetime import datetime
 from sqlalchemy import (
     Column,
     String,
+    Float,
     DateTime,
 )
 
@@ -15,9 +16,9 @@ from sqlalchemy.dialects.postgresql import (
 from app.db.base import Base
 
 
-class Workflow(Base):
+class RuntimeMetric(Base):
 
-    __tablename__ = "workflows"
+    __tablename__ = "runtime_metrics"
 
     id = Column(
 
@@ -28,21 +29,28 @@ class Workflow(Base):
         default=uuid.uuid4,
     )
 
-    name = Column(
+    workflow_id = Column(
+
+        UUID(as_uuid=True),
+
+        nullable=False,
+    )
+
+    metric_name = Column(
 
         String,
 
         nullable=False,
     )
 
-    status = Column(
+    metric_value = Column(
 
-        String,
+        Float,
 
-        default="pending",
+        nullable=False,
     )
 
-    interrupt_reason = Column(
+    node_name = Column(
 
         String,
 

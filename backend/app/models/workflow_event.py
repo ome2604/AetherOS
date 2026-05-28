@@ -6,6 +6,7 @@ from sqlalchemy import (
     Column,
     String,
     DateTime,
+    JSON,
 )
 
 from sqlalchemy.dialects.postgresql import (
@@ -15,9 +16,9 @@ from sqlalchemy.dialects.postgresql import (
 from app.db.base import Base
 
 
-class Workflow(Base):
+class WorkflowEvent(Base):
 
-    __tablename__ = "workflows"
+    __tablename__ = "workflow_events"
 
     id = Column(
 
@@ -28,23 +29,37 @@ class Workflow(Base):
         default=uuid.uuid4,
     )
 
-    name = Column(
+    workflow_id = Column(
+
+        UUID(as_uuid=True),
+
+        nullable=False,
+    )
+
+    event_type = Column(
 
         String,
 
         nullable=False,
     )
 
+    node_name = Column(
+
+        String,
+
+        nullable=True,
+    )
+
     status = Column(
 
         String,
 
-        default="pending",
+        nullable=False,
     )
 
-    interrupt_reason = Column(
+    payload = Column(
 
-        String,
+        JSON,
 
         nullable=True,
     )

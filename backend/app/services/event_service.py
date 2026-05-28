@@ -1,25 +1,41 @@
-import redis
-import json
+from sqlalchemy.orm import Session
 
-from app.core.config import settings
-
-
-redis_client = redis.Redis.from_url(
-    settings.REDIS_URL
+from app.repositories.event_repository import (
+    EventRepository,
 )
 
 
-def publish_workflow_event(
-    workflow_id: str,
-    status: str
-):
+class EventService:
 
-    payload = {
-        "workflow_id": workflow_id,
-        "status": status
-    }
+    @staticmethod
+    def persist_event(
 
-    redis_client.publish(
-        "workflow-events",
-        json.dumps(payload)
-    )
+        db: Session,
+
+        workflow_id: str,
+
+        event_type: str,
+
+        node_name: str,
+
+        status: str,
+
+        payload: dict,
+    ):
+
+        return (
+            EventRepository.create_event(
+
+                db=db,
+
+                workflow_id=workflow_id,
+
+                event_type=event_type,
+
+                node_name=node_name,
+
+                status=status,
+
+                payload=payload,
+            )
+        )

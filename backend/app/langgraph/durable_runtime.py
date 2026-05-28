@@ -32,6 +32,10 @@ class DurableLangGraphRuntime:
         initial_state: dict,
     ):
 
+        # =====================================
+        # RECOVERY LOGIC
+        # =====================================
+
         recovery = (
             GraphRecoveryEngine
             .recover_checkpoint(
@@ -70,12 +74,20 @@ class DurableLangGraphRuntime:
                 state["current_node"]
             )
 
+        # =====================================
+        # EXECUTION LOOP
+        # =====================================
+
         while current_node != "completed":
 
             print(
                 f"\n[EXECUTING NODE] "
                 f"{current_node}"
             )
+
+            # =================================
+            # EXECUTE CURRENT NODE
+            # =================================
 
             state = (
                 self.runtime.execute_node(
@@ -84,13 +96,25 @@ class DurableLangGraphRuntime:
                 )
             )
 
-            current_node = (
+            # =================================
+            # DETERMINE NEXT NODE
+            # =================================
+
+            next_node = (
                 self.runtime.get_next_node(
                     state
                 )
             )
 
-            if current_node == "completed":
+            # =================================
+            # UPDATE STATE
+            # =================================
+
+            state["current_node"] = (
+                next_node
+            )
+
+            if next_node == "completed":
 
                 state["status"] = (
                     "completed"
@@ -102,9 +126,13 @@ class DurableLangGraphRuntime:
                     "running"
                 )
 
+            # =================================
+            # SAVE CHECKPOINT
+            # =================================
+
             print(
                 f"[CHECKPOINT SAVED] "
-                f"{current_node}"
+                f"{next_node}"
             )
 
             GraphCheckpointManager.save_checkpoint(
@@ -113,10 +141,20 @@ class DurableLangGraphRuntime:
 
                 workflow_id=workflow_id,
 
-                node_name=current_node,
+                node_name=next_node,
 
                 state=state,
             )
+
+            # =================================
+            # MOVE TO NEXT NODE
+            # =================================
+
+            current_node = next_node
+
+        # =====================================
+        # WORKFLOW COMPLETED
+        # =====================================
 
         print(
             f"\n[WORKFLOW COMPLETED] "
