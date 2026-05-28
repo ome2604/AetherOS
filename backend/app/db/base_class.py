@@ -15,3 +15,15 @@ from app.models.workflow_event import (
 from app.models.runtime_metric import (
     RuntimeMetric
 )
+
+from app.models.discovery_session import (
+    DiscoverySession
+)
+
+from app.models.discovery_message import (
+    DiscoveryMessage
+)
+
+from app.models.project_context import (
+    ProjectContext
+)

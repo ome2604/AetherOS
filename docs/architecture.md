@@ -1,199 +1,486 @@
-# AetherOS — Architecture Documentation
+# AetherOS — System Architecture
 
-# System Vision
+# Overview
 
-AetherOS is being designed as:
+AetherOS is an enterprise-grade AI Workflow Operating System designed to orchestrate:
 
-- enterprise-grade AI Agile Workflow Operating System
-- distributed orchestration infrastructure
-- graph-native execution runtime
-- durable workflow platform
-- enterprise AI operating layer
+* AI product discovery
+* requirement generation
+* architecture planning
+* task decomposition
+* delivery intelligence
+* realtime orchestration
+* operational analytics
+
+using durable distributed runtime infrastructure.
+
+---
+
+# Core Architecture Philosophy
+
+The platform is designed using:
+
+* infrastructure-first engineering
+* durable execution
+* distributed systems
+* event-driven orchestration
+* graph-native workflows
+* enterprise observability
+* scalable runtime isolation
 
 This is NOT:
-- a simple chatbot
-- an LLM wrapper
-- a demo workflow app
+
+* monolithic AI wrapper
+* simple chatbot platform
+* synchronous backend application
 
 This IS:
-- orchestration infrastructure
-- AI runtime platform
-- workflow operating system
+
+* distributed orchestration platform
+* AI runtime infrastructure
+* operational intelligence system
 
 ---
 
-# Core Architectural Principles
-
-## 1. Durability First
-
-All workflows must survive:
-
-- crashes
-- worker failures
-- API restarts
-- infrastructure restarts
-- partial execution failures
-
-Workflow state MUST persist outside process memory.
-
----
-
-## 2. Distributed Execution
-
-Execution must scale horizontally.
-
-The runtime is designed around:
-- distributed workers
-- async execution
-- independent orchestration nodes
-
----
-
-## 3. Graph-Native Orchestration
-
-Workflows are represented as:
-- state machines
-- execution graphs
-- node transitions
-
-NOT:
-- sequential procedural chains
-
-LangGraph is the orchestration kernel.
-
----
-
-## 4. Runtime-Centric Design
-
-The system is built around:
-- orchestration runtime
-- execution durability
-- workflow state management
-
-NOT:
-- request/response APIs only
-
----
-
-## 5. Enterprise Scalability
-
-Architecture must support:
-- multi-agent systems
-- long-running workflows
-- enterprise observability
-- replayability
-- auditability
-- realtime orchestration
-
----
-
-# Current High-Level Architecture
+# High-Level Architecture
 
 ```text
-Frontend (Next.js)
-        ↓
-FastAPI API Gateway
-        ↓
-Redis Runtime Layer
-        ↓
-Celery Distributed Workers
-        ↓
-LangGraph Runtime Engine
-        ↓
-Durable Runtime Engine
-        ↓
-Checkpoint Persistence Layer
-        ↓
-PostgreSQL
+                        ┌────────────────────┐
+                        │     Frontend UI    │
+                        │  Next.js + TS      │
+                        └─────────┬──────────┘
+                                  │
+                                  ▼
+                    ┌─────────────────────────┐
+                    │     FastAPI Gateway     │
+                    │     API Layer           │
+                    └─────────┬───────────────┘
+                              │
+          ┌───────────────────┼───────────────────┐
+          │                   │                   │
+          ▼                   ▼                   ▼
+
+┌────────────────┐  ┌────────────────┐  ┌────────────────┐
+│ Workflow APIs  │  │ Realtime APIs  │  │ Metrics APIs   │
+└────────────────┘  └────────────────┘  └────────────────┘
+
+                              │
+                              ▼
+
+                ┌─────────────────────────┐
+                │   LangGraph Runtime     │
+                │ Durable Workflow Engine │
+                └─────────┬───────────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          │               │                │
+          ▼               ▼                ▼
+
+ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+ │ Replay       │ │ Interrupt    │ │ Realtime     │
+ │ Runtime      │ │ Runtime      │ │ Runtime      │
+ └──────────────┘ └──────────────┘ └──────────────┘
+
+                          │
+                          ▼
+
+                ┌─────────────────────────┐
+                │ Celery Worker Runtime   │
+                │ Distributed Execution   │
+                └─────────┬───────────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          │               │                │
+          ▼               ▼                ▼
+
+ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+ │ PostgreSQL   │ │ Redis Queue  │ │ WebSockets   │
+ │ Persistence  │ │ Task Broker  │ │ Telemetry    │
+ └──────────────┘ └──────────────┘ └──────────────┘
 ```
 
 ---
 
-# Layer-by-Layer Architecture
-
-# 1. Frontend Layer
+# Frontend Architecture
 
 ## Stack
-- Next.js
-- TypeScript
-- Tailwind
-- shadcn/ui
 
-## Responsibilities
-- workflow UI
-- orchestration interaction
-- execution visualization
-- realtime monitoring
-- workflow dashboards
-
-## Future Enhancements
-- realtime workflow graph viewer
-- replay timeline UI
-- execution analytics dashboard
+* Next.js
+* TypeScript
+* TailwindCSS
+* shadcn/ui
 
 ---
 
-# 2. API Gateway Layer
+# Frontend Responsibilities
 
-## Stack
-- FastAPI
+## Discovery Workspace
 
-## Responsibilities
-- workflow APIs
-- orchestration entrypoint
-- authentication
-- runtime coordination
-- execution control
+Handles:
 
-## Why FastAPI?
-Chosen because:
-- async support
-- high performance
-- modern Python architecture
-- WebSocket support
-- scalable API design
+* AI discovery conversations
+* requirement refinement
+* project onboarding
 
 ---
 
-# 3. Runtime Communication Layer
+## Workflow Dashboard
 
-## Stack
-- Redis
+Displays:
 
-## Responsibilities
-- distributed communication
-- event transport
-- pub/sub messaging
-- task queue coordination
-- runtime signaling
-
-## Architectural Role
-
-Redis acts as:
-- orchestration transport layer
-- distributed event bus
-- runtime communication backbone
-
-## Enterprise Capability Unlocked
-- scalable worker coordination
-- realtime event infrastructure
-- async orchestration foundation
+* workflow progress
+* orchestration state
+* execution timelines
+* realtime telemetry
 
 ---
 
-# 4. Distributed Worker Layer
+## Leadership Dashboard
+
+Displays:
+
+* delivery intelligence
+* operational analytics
+* engineering metrics
+* organizational visibility
+
+---
+
+# Backend Architecture
 
 ## Stack
-- Celery
+
+* FastAPI
+* PostgreSQL
+* Redis
+* Celery
+* LangGraph
+* WebSockets
+* Prometheus
+
+---
+
+# API Layer
 
 ## Responsibilities
-- async workflow execution
-- distributed workers
-- retries
-- resilient execution
-- background orchestration
 
-## Workflow Execution Model
+* workflow orchestration APIs
+* realtime APIs
+* metrics APIs
+* replay APIs
+* interrupt APIs
+
+---
+
+# FastAPI Gateway Responsibilities
+
+## Handles
+
+* API routing
+* request validation
+* orchestration entry points
+* websocket coordination
+* observability endpoints
+
+---
+
+# Workflow Runtime Architecture
+
+## Runtime Engine
+
+The core orchestration engine uses:
+
+* LangGraph
+* durable checkpoints
+* resumable execution
+* distributed workers
+
+---
+
+# Workflow Lifecycle
+
+```text
+Create Workflow
+        ↓
+Persist Initial State
+        ↓
+Send Task To Celery
+        ↓
+Worker Executes Runtime
+        ↓
+Node Execution
+        ↓
+Checkpoint Save
+        ↓
+Event Broadcast
+        ↓
+Metrics Collection
+        ↓
+Workflow Completion
+```
+
+---
+
+# Durable Runtime Architecture
+
+## Purpose
+
+Guarantee:
+
+* workflow recovery
+* resumable execution
+* operational durability
+
+---
+
+# Components
+
+## DurableLangGraphRuntime
+
+Responsibilities:
+
+* node execution
+* state transitions
+* checkpoint persistence
+* orchestration recovery
+
+---
+
+## GraphCheckpointManager
+
+Responsibilities:
+
+* checkpoint persistence
+* node snapshots
+* recovery state storage
+
+---
+
+## RecoveryManager
+
+Responsibilities:
+
+* workflow restoration
+* checkpoint loading
+* recovery orchestration
+
+---
+
+# Replay Runtime
+
+## Purpose
+
+Enable:
+
+* operational replay
+* execution auditing
+* debugging visibility
+
+---
+
+# Flow
+
+```text
+Workflow Execution
+        ↓
+Checkpoint History
+        ↓
+Replay Reconstruction
+        ↓
+Operational Timeline
+```
+
+---
+
+# Interrupt Runtime
+
+## Purpose
+
+Enable:
+
+* human approvals
+* pause/resume
+* operational intervention
+
+---
+
+# Flow
+
+```text
+Workflow Running
+        ↓
+Interrupt Trigger
+        ↓
+Workflow Paused
+        ↓
+Human Approval
+        ↓
+Workflow Resumed
+```
+
+---
+
+# Realtime Runtime
+
+## Purpose
+
+Provide:
+
+* live telemetry
+* realtime orchestration visibility
+* distributed coordination
+
+---
+
+# Components
+
+## WebSocket Manager
+
+Handles:
+
+* websocket connections
+* client subscriptions
+* live event streaming
+
+---
+
+## EventManager
+
+Handles:
+
+* workflow broadcasts
+* orchestration events
+* node telemetry
+
+---
+
+## Event Persistence
+
+Stores:
+
+* workflow events
+* orchestration timelines
+* operational audit trails
+
+---
+
+# Observability Architecture
+
+## Goals
+
+Track:
+
+* workflow duration
+* failure rates
+* orchestration latency
+* execution throughput
+* node telemetry
+
+---
+
+# Metrics Runtime
+
+## Components
+
+### RuntimeMetricService
+
+Handles:
+
+* metric persistence
+* analytics aggregation
+* runtime telemetry
+
+---
+
+# Metrics APIs
+
+Endpoints:
+
+```text
+GET /metrics/runtime
+GET /metrics/workflows
+GET /metrics/failures
+```
+
+---
+
+# Database Architecture
+
+## PostgreSQL Responsibilities
+
+Stores:
+
+* workflows
+* checkpoints
+* events
+* metrics
+* runtime state
+
+---
+
+# Core Tables
+
+## workflows
+
+Stores:
+
+* workflow metadata
+* execution state
+* runtime status
+
+---
+
+## workflow_checkpoints
+
+Stores:
+
+* node snapshots
+* orchestration recovery state
+* graph transitions
+
+---
+
+## workflow_events
+
+Stores:
+
+* realtime telemetry
+* orchestration events
+* execution timeline
+
+---
+
+## runtime_metrics
+
+Stores:
+
+* workflow duration
+* failures
+* execution analytics
+
+---
+
+# Redis Architecture
+
+## Responsibilities
+
+* Celery broker
+* distributed task coordination
+* ephemeral runtime state
+
+---
+
+# Celery Architecture
+
+## Responsibilities
+
+* distributed execution
+* background orchestration
+* scalable workflow runtime
+
+---
+
+# Worker Flow
 
 ```text
 API Request
@@ -202,406 +489,141 @@ Redis Queue
     ↓
 Celery Worker
     ↓
-LangGraph Runtime
+Durable Runtime
+    ↓
+Checkpoint Persistence
+    ↓
+Event Streaming
 ```
-
-## Enterprise Capability Unlocked
-- horizontal scalability
-- resilient execution
-- independent runtime lifecycle
 
 ---
 
-# 5. LangGraph Runtime Layer
+# Current Runtime Capabilities
 
-## Stack
-- LangGraph
+## Completed
 
-## Responsibilities
-- workflow state machine
-- graph execution
-- node orchestration
-- conditional routing
-- execution transitions
+| Capability          | Status |
+| ------------------- | ------ |
+| Durable Workflows   | ✅      |
+| Replay Runtime      | ✅      |
+| Interrupt Runtime   | ✅      |
+| WebSocket Runtime   | ✅      |
+| Workflow Metrics    | ✅      |
+| Operational Replay  | ✅      |
+| Distributed Workers | ✅      |
+| Checkpoint Recovery | ✅      |
+| Realtime Telemetry  | ✅      |
+| Event Persistence   | ✅      |
 
-## Current Runtime Graph
+---
+
+# Planned Future Architecture
+
+# Discovery Intelligence Engine
+
+Will introduce:
+
+* AI clarification runtime
+* discovery graphs
+* conversation orchestration
+* context memory
+
+---
+
+# Requirement Intelligence Engine
+
+Will introduce:
+
+* PRD generation
+* risk analysis
+* feature extraction
+* scope intelligence
+
+---
+
+# Memory + RAG Platform
+
+Will introduce:
+
+* Qdrant vector memory
+* semantic retrieval
+* organizational memory
+* enterprise knowledge graphs
+
+---
+
+# Team Intelligence Engine
+
+Will introduce:
+
+* skill graphs
+* employee matching
+* workload optimization
+* engineering analytics
+
+---
+
+# Enterprise Platform Layer
+
+Will introduce:
+
+* RBAC
+* multi-tenancy
+* audit systems
+* organization isolation
+
+---
+
+# Observability Evolution
+
+Future observability stack:
 
 ```text
-planner
-   ↓
-executor
-   ↓
-reviewer
-   ↓
-END
-```
-
-## Why LangGraph?
-
-LangGraph enables:
-- graph-native orchestration
-- multi-agent workflows
-- state-machine execution
-- dynamic routing
-- durable execution patterns
-
----
-
-# 6. Durable Runtime Layer
-
-## Responsibilities
-- node-level checkpointing
-- incremental persistence
-- replay foundation
-- recovery runtime
-- resumable execution
-
-## Current Durable Flow
-
-```text
-planner
-↓ save checkpoint
-
-executor
-↓ save checkpoint
-
-reviewer
-↓ save checkpoint
-
-completed
-↓ save final state
-```
-
-## Enterprise Capability Unlocked
-
-### Crash Recovery
-Resume from last successful node.
-
-### Replayability
-Reconstruct execution history.
-
-### Auditability
-Track all workflow transitions.
-
-### Long-Running Workflows
-Support enterprise-scale orchestration.
-
----
-
-# 7. Persistence Layer
-
-## Stack
-- PostgreSQL
-
-## Responsibilities
-- workflow persistence
-- checkpoint storage
-- execution history
-- orchestration audit trail
-- runtime durability
-
-## Core Tables
-
-### workflows
-Stores:
-- workflow metadata
-- workflow ownership
-- execution lifecycle
-
-### workflow_checkpoints
-Stores:
-- node state
-- orchestration snapshots
-- execution history
-- recovery checkpoints
-
----
-
-# Runtime Execution Flow
-
-# Standard Workflow Execution
-
-```text
-Frontend Request
-        ↓
-FastAPI Endpoint
-        ↓
-Celery Worker Trigger
-        ↓
-LangGraph Runtime Starts
-        ↓
-Planner Node Executes
-        ↓
-Checkpoint Saved
-        ↓
-Executor Node Executes
-        ↓
-Checkpoint Saved
-        ↓
-Reviewer Node Executes
-        ↓
-Checkpoint Saved
-        ↓
-Workflow Completed
-        ↓
-Final State Persisted
+Prometheus
+    ↓
+Grafana
+    ↓
+Operational Dashboards
 ```
 
 ---
 
-# Recovery Execution Flow
+# Scalability Goals
 
-```text
-Worker Crash
-        ↓
-Recovery Engine Reads Latest Checkpoint
-        ↓
-Restore Workflow State
-        ↓
-Determine Resume Node
-        ↓
-Resume Execution
-```
+The platform should eventually support:
+
+* thousands of workflows
+* distributed worker clusters
+* multi-tenant organizations
+* enterprise orchestration
+* large-scale realtime telemetry
 
 ---
 
-# Replay Execution Flow
+# Engineering Principles
 
-```text
-Workflow History Request
-        ↓
-Replay Engine Reads Checkpoints
-        ↓
-Reconstruct Execution Timeline
-        ↓
-Render Workflow History
-```
+Every architecture decision must optimize for:
 
----
-
-# Architectural Decisions
-
-# Decision 1 — Durable Workflows
-
-## Problem
-In-memory orchestration is unsafe.
-
-## Solution
-Persist workflow state into PostgreSQL.
-
-## Why It Matters
-Enterprise systems require:
-- resilience
-- recoverability
-- replayability
+| Principle             | Required |
+| --------------------- | -------- |
+| Durability            | YES      |
+| Scalability           | YES      |
+| Observability         | YES      |
+| Distributed Execution | YES      |
+| Fault Tolerance       | YES      |
+| Recovery Capability   | YES      |
+| Enterprise Readiness  | YES      |
 
 ---
 
-# Decision 2 — Graph-Native Runtime
+# Current Engineering Level
 
-## Problem
-Sequential orchestration does not scale.
+The platform now includes concepts used in:
 
-## Solution
-Use LangGraph state-machine execution.
+* Temporal
+* Airflow
+* Dagster
+* Prefect
+* enterprise orchestration systems
 
-## Why It Matters
-Enables:
-- dynamic routing
-- agent systems
-- workflow intelligence
-
----
-
-# Decision 3 — Distributed Workers
-
-## Problem
-Synchronous execution blocks scalability.
-
-## Solution
-Use Redis + Celery workers.
-
-## Why It Matters
-Enables:
-- horizontal scaling
-- async execution
-- resilient processing
-
----
-
-# Decision 4 — Node-Level Persistence
-
-## Problem
-Single final checkpoint is unsafe.
-
-## Solution
-Persist after every node transition.
-
-## Why It Matters
-Enables:
-- resumable execution
-- partial recovery
-- operational replay
-
----
-
-# Current Enterprise Capabilities
-
-| Capability | Status |
-|---|---|
-| Distributed Workers | ✅ |
-| Durable Runtime | ✅ |
-| Graph Orchestration | ✅ |
-| Node Checkpoints | ✅ |
-| Replay Foundation | ✅ |
-| Recovery Foundation | ✅ |
-| Async Execution | ✅ |
-| Workflow Persistence | ✅ |
-
----
-
-# Scaling Strategy
-
-# Horizontal Scaling
-
-## Current
-Single-machine execution.
-
-## Future
-Multiple distributed workers.
-
-```text
-Redis Queue
-   ↓
-Worker A
-Worker B
-Worker C
-```
-
----
-
-# Multi-Agent Scaling
-
-## Planned
-
-```text
-planner-agent
-reviewer-agent
-architect-agent
-pm-agent
-engineering-agent
-```
-
-Each agent becomes:
-- independently orchestrated
-- graph-connected
-- durable
-
----
-
-# Realtime Scaling
-
-## Planned
-WebSocket event streaming.
-
-Capabilities:
-- live workflow updates
-- execution telemetry
-- realtime orchestration monitoring
-
----
-
-# Enterprise Memory Layer
-
-## Planned Stack
-- Qdrant
-
-## Capabilities
-- semantic retrieval
-- organizational memory
-- contextual execution
-- workflow intelligence
-
----
-
-# Future Architecture Roadmap
-
-# Phase 1
-Infrastructure Runtime
-✅ COMPLETE
-
----
-
-# Phase 2
-AI Workflow Engine
-🚧 NEXT
-
----
-
-# Phase 3
-Enterprise RAG + Memory
-🚧 NEXT
-
----
-
-# Phase 4
-Realtime Execution Platform
-🚧 NEXT
-
----
-
-# Phase 5
-Team Intelligence Layer
-🚧 NEXT
-
----
-
-# Phase 6
-Enterprise Governance Layer
-🚧 NEXT
-
----
-
-# Long-Term Vision
-
-AetherOS evolves into:
-
-- enterprise orchestration platform
-- AI execution operating system
-- autonomous workflow runtime
-- graph-native infrastructure platform
-- enterprise workflow intelligence engine
-
----
-
-# Engineering Philosophy
-
-Always optimize for:
-
-1. infrastructure
-2. scalability
-3. durability
-4. observability
-5. enterprise engineering
-
-Never optimize for:
-- temporary hacks
-- demo-only architecture
-- short-term shortcuts
-
----
-
-# Key Engineering Realization
-
-AetherOS is NOT:
-- an AI feature app
-
-AetherOS IS:
-- orchestration infrastructure
-- execution runtime
-- enterprise workflow kernel
-
-This mindset shift is critical for:
-- Staff-level engineering
-- AI infrastructure architecture
-- distributed systems mastery
+This is significantly beyond typical portfolio projects.

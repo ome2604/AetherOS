@@ -1,619 +1,590 @@
-# `docs/learnings.md`
-
-````md id="learn001"
 # AetherOS — Engineering Learnings
 
-# Purpose Of This Document
+# Purpose
 
-This document tracks:
+This document captures:
 
-- engineering learnings
-- architecture lessons
-- distributed systems concepts
-- failures and fixes
-- runtime engineering insights
-- orchestration design learnings
+* engineering learnings
+* infrastructure insights
+* architectural decisions
+* failures and fixes
+* distributed systems understanding
+* operational debugging experience
 
-Goal:
-Build Staff/Principal-level engineering thinking.
+The goal is to develop:
 
----
-
-# Redis Learnings
-
-# Why Redis Was Introduced
-
-Redis was introduced to solve:
-
-- distributed communication
-- async orchestration
-- event transport
-- worker coordination
-
-Without Redis:
-- orchestration remains tightly coupled
-- scalability becomes difficult
-- realtime runtime becomes impossible
+* senior engineering mindset
+* systems thinking
+* architecture intuition
+* operational debugging capability
 
 ---
 
-# What Redis Is Doing In AetherOS
-
-Redis acts as:
-
-- orchestration transport layer
-- distributed runtime communication bus
-- queue backend
-- pub/sub foundation
+# PHASE 1 — Infrastructure Foundation Learnings
 
 ---
 
-# Key Redis Learnings
+# FastAPI Learnings
 
-## 1. Distributed Runtime Requires Shared Communication
+## API Gateway Architecture
 
-Workers need:
-- shared queue
-- shared event system
-- distributed coordination
+Learned:
 
-Redis solves this.
-
----
-
-## 2. Event-Driven Systems Scale Better
-
-Traditional synchronous execution:
-- blocks runtime
-- reduces scalability
-
-Redis enables:
-- async orchestration
-- decoupled execution
-- distributed runtime
+* FastAPI works well as orchestration gateway
+* async APIs are important for workflow systems
+* route modularization improves scalability
+* dependency injection simplifies architecture
 
 ---
 
-## 3. Redis Creates Foundation For Realtime Systems
+# Enterprise Insight
 
-Future capabilities enabled:
-- WebSockets
-- event streaming
-- realtime workflow telemetry
+A workflow platform should separate:
 
----
-
-# Redis Failure Learnings
-
-## Problem
-Port conflicts on Windows.
-
-## Root Cause
-Redis already running locally.
-
-## Fix
-Identify running Redis process or change port mapping.
+| Layer             | Responsibility   |
+| ----------------- | ---------------- |
+| API Layer         | request handling |
+| Service Layer     | business logic   |
+| Runtime Layer     | orchestration    |
+| Persistence Layer | durability       |
 
 ---
 
-## Problem
-Docker Redis connection failures.
+# Important Realization
 
-## Root Cause
-Docker Desktop not running.
+Monolithic workflow managers become:
 
-## Fix
-Use native Redis installation for local development.
+* hard to scale
+* hard to debug
+* hard to recover
 
----
-
-# Celery Learnings
-
-# Why Celery Was Introduced
-
-Celery was introduced to solve:
-
-- background execution
-- distributed workers
-- retry infrastructure
-- scalable workflow execution
-
-Without Celery:
-- workflows block API threads
-- long-running execution becomes unstable
-- scalability suffers
-
----
-
-# What Celery Is Doing In AetherOS
-
-Celery acts as:
-
-- distributed worker runtime
-- async execution engine
-- retry orchestration layer
-
----
-
-# Key Celery Learnings
-
-## 1. Enterprise Systems Require Async Execution
-
-Workflows must execute independently of:
-- frontend lifecycle
-- API request lifecycle
-
-This is critical for:
-- resilience
-- scalability
-- distributed orchestration
-
----
-
-## 2. Workers Are Runtime Infrastructure
-
-Workers are NOT background utilities.
-
-Workers are:
-- execution infrastructure
-- orchestration runtime
-- distributed compute layer
-
----
-
-## 3. Retry Infrastructure Is Critical
-
-Enterprise workflows fail.
-
-Retry systems improve:
-- reliability
-- resilience
-- workflow continuity
-
----
-
-# Celery Windows Learnings
-
-## Problem
-Celery multiprocessing crashes heavily on Windows.
-
-Errors included:
-- WinError 5
-- WinError 6
-- billiard multiprocessing failures
-
----
-
-## Root Cause
-
-Celery prefork pool uses:
-- POSIX-style multiprocessing
-
-Windows multiprocessing behaves differently.
-
----
-
-## Fix
-
-Use solo worker pool.
-
-Command:
-
-```bash
-celery -A app.workers.workflow_tasks worker --pool=solo --loglevel=info
-```
-
----
-
-# Celery Failure Learnings
-
-## Problem
-Worker import failures.
-
-## Root Cause
-Incorrect Python package structure.
-
----
-
-## Fix
-- proper package boundaries
-- __init__.py files
-- correct module hierarchy
+Distributed architecture is required for enterprise AI systems.
 
 ---
 
 # PostgreSQL Learnings
 
-# Why PostgreSQL Was Introduced
+## Durable Persistence
 
-PostgreSQL was introduced for:
+Learned:
 
-- durable workflow persistence
-- orchestration auditability
-- replayability
-- enterprise consistency
-
----
-
-# Key PostgreSQL Learnings
-
-## 1. Durable Workflows Require Persistent State
-
-Workflow state cannot remain:
-- in memory
-- inside worker processes
-
-State MUST persist externally.
+* workflow state must persist
+* checkpoints are critical
+* replay requires durable history
+* operational audit requires event persistence
 
 ---
 
-## 2. Relational Integrity Matters
+# Important Tables Built
 
-Enterprise orchestration requires:
-- workflow ownership
-- checkpoint relationships
-- durable identifiers
-
----
-
-## 3. UUID Consistency Is Critical
-
-Distributed systems depend heavily on:
-- unique workflow identity
-- deterministic execution references
+| Table                | Purpose        |
+| -------------------- | -------------- |
+| workflows            | workflow state |
+| workflow_checkpoints | node recovery  |
+| workflow_events      | telemetry      |
+| runtime_metrics      | observability  |
 
 ---
 
-# PostgreSQL Failure Learnings
+# Major Engineering Lesson
 
-## Problem
-UUID validation failures.
+State persistence is the foundation of:
 
-## Root Cause
-Invalid workflow IDs passed into PostgreSQL.
-
----
-
-## Fix
-Use proper UUID-based workflow identifiers.
-
----
-
-## Problem
-Foreign key violations.
-
-## Root Cause
-Checkpoint inserted before workflow existed.
-
----
-
-## Fix
-Create workflow record before checkpoint persistence.
-
----
-
-# Durable Runtime Learnings
-
-# Why Durable Runtime Matters
-
-Enterprise workflows must survive:
-
-- crashes
-- worker death
-- API restarts
-- infrastructure failures
-
-Durability is NOT optional.
-
----
-
-# Key Durable Runtime Learnings
-
-## 1. In-Memory Orchestration Is Unsafe
+* durability
+* replay runtime
+* recovery systems
+* operational observability
 
 Without persistence:
-- workflows disappear on crash
-- execution cannot resume
-- replay becomes impossible
+enterprise orchestration is impossible.
 
 ---
 
-## 2. Checkpoints Create Recovery Capability
+# Alembic Learnings
 
-Checkpoints enable:
-- resumable execution
-- workflow replay
-- crash recovery
-- auditability
+## Migration Architecture
+
+Learned:
+
+* SQLAlchemy models are NOT enough
+* migrations must be applied explicitly
+* Alembic requires proper model registration
 
 ---
 
-## 3. Node-Level Persistence Is Superior
+# Major Failure
 
-Single final checkpoint is unsafe.
-
-Better approach:
+Encountered:
 
 ```text
-planner
-↓ save
+UndefinedColumn
+```
 
-executor
-↓ save
+because models were updated but migrations were not applied.
 
-reviewer
-↓ save
+---
+
+# Circular Import Failure
+
+Encountered:
+
+```text
+cannot import name 'Base'
+from partially initialized module
 ```
 
 ---
 
-## 4. State Consistency Is Hard
+# Root Cause
 
-Distributed systems become difficult because of:
-- state synchronization
-- execution consistency
-- distributed persistence
+Improper architecture:
 
-NOT because of:
-- APIs
-- frameworks
+```text
+Base imports models
+Models import Base
+```
 
 ---
 
-# Durable Runtime Failure Learnings
+# Correct Architecture
 
-## Problem
-completed → running inconsistency.
+Separated:
+
+| File          | Responsibility     |
+| ------------- | ------------------ |
+| base.py       | Base definition    |
+| base_class.py | model registration |
 
 ---
 
-## Root Cause
-Workflow node transitioned before status updated.
+# Enterprise Insight
+
+Production backend systems require:
+
+* clear dependency boundaries
+* proper model registration
+* isolated architecture layers
 
 ---
 
-## Fix
-Explicitly synchronize:
-- current_node
-- workflow status
+# Redis Learnings
 
-before checkpoint persistence.
+## Distributed Runtime Coordination
+
+Learned:
+
+* Redis works as Celery broker
+* queues enable asynchronous execution
+* runtime orchestration should not block APIs
+
+---
+
+# Enterprise Insight
+
+Without queues:
+
+* workflows become synchronous
+* APIs become slow
+* orchestration becomes unstable
+
+Redis enables:
+
+* distributed execution
+* worker scaling
+* orchestration decoupling
+
+---
+
+# Celery Learnings
+
+## Background Workflow Runtime
+
+Learned:
+
+* workflows must execute independently
+* background workers improve resiliency
+* orchestration should survive frontend disconnects
+
+---
+
+# Major Realization
+
+Enterprise AI systems are:
+
+```text
+event-driven systems
+```
+
+NOT:
+
+```text
+request-response systems
+```
+
+---
+
+# Worker Architecture Learnings
+
+## Important Concepts
+
+Learned:
+
+* task queues
+* worker isolation
+* distributed execution
+* runtime coordination
+
+---
+
+# Important Insight
+
+The frontend should NEVER directly control workflow execution.
+
+Instead:
+
+```text
+Frontend
+    ↓
+API
+    ↓
+Queue
+    ↓
+Worker Runtime
+```
+
+This improves:
+
+* durability
+* scalability
+* resiliency
 
 ---
 
 # LangGraph Learnings
 
-# Why LangGraph Was Introduced
+## Workflow Orchestration
 
-LangGraph was introduced to solve:
+Learned:
 
-- graph-native orchestration
-- state-machine execution
-- dynamic workflow routing
-- multi-agent orchestration
-
----
-
-# Key LangGraph Learnings
-
-## 1. Workflows Should Be Graphs
-
-Traditional orchestration:
-
-```text
-planner()
-executor()
-reviewer()
-```
-
-Enterprise orchestration:
-
-```text
-planner
-   ↓
-executor
-   ↓
-reviewer
-```
-
-represented as:
-- runtime graph
-- executable state machine
+* workflows should be graph-native
+* node execution should be isolated
+* orchestration needs checkpointing
+* graph runtimes simplify complex flows
 
 ---
 
-## 2. Runtime-Controlled Execution Is Superior
+# Durable Runtime Learnings
 
-Graph runtime controls:
-- transitions
-- routing
-- state
-- execution lifecycle
+Implemented:
 
-This improves:
-- scalability
-- flexibility
-- orchestration intelligence
+* node persistence
+* resumable execution
+* checkpoint recovery
+* replay runtime
 
 ---
 
-## 3. LangGraph Enables Multi-Agent Systems
+# Enterprise Insight
 
-Future architecture:
+Durable orchestration is one of the HARDEST parts of backend systems.
 
-```text
-planner-agent
-reviewer-agent
-architect-agent
-pm-agent
-```
+Most AI projects completely ignore:
 
-connected through orchestration graph.
-
----
-
-## 4. Graph Execution Enables Dynamic Routing
-
-Future capability:
-
-```python
-if confidence < 80:
-    retry_executor
-else:
-    continue
-```
-
-Impossible in linear workflows.
-
----
-
-# LangGraph Failure Learnings
-
-## Problem
-Module import failures.
-
-## Root Cause
-Improper package hierarchy.
-
----
-
-## Fix
-Correct Python package structure:
-- app/
-- repositories/
-- runtime/
-- langgraph/
+* recovery
+* replay
+* interruption
+* persistence
 
 ---
 
 # Replay Runtime Learnings
 
-# Why Replay Matters
+## Operational Replay
 
-Replay enables:
-- debugging
-- observability
-- auditability
-- execution reconstruction
+Learned:
 
-Enterprise systems REQUIRE replay capability.
+* replay is critical for debugging
+* audit systems require execution history
+* orchestration visibility improves reliability
 
 ---
 
-# Recovery Runtime Learnings
+# Important Realization
 
-# Why Recovery Matters
+Enterprise platforms require:
 
-Recovery enables:
-- resumable execution
-- operational resilience
-- crash survivability
+* execution traceability
+* operational timelines
+* debugging visibility
 
-Without recovery:
-enterprise orchestration is unsafe.
+Replay runtime enables this.
 
 ---
 
-# Enterprise RAG Learnings
+# Interrupt Runtime Learnings
 
-# Why Enterprise RAG Matters
+## Human-in-Loop Systems
 
-Future enterprise systems require:
-- semantic memory
-- contextual retrieval
-- organizational knowledge
+Implemented:
 
-Simple prompt injection is NOT sufficient.
+* pause/resume
+* approval gates
+* workflow interruption
 
 ---
 
-# Planned RAG Architecture
+# Major Insight
 
-Future stack:
-- Qdrant
-- vector memory
-- semantic retrieval
-- workflow context engine
+Real enterprise workflows are NOT fully autonomous.
+
+Human approvals are required for:
+
+* compliance
+* security
+* operational governance
+
+---
+
+# WebSocket Learnings
+
+## Realtime Telemetry
+
+Implemented:
+
+* websocket runtime
+* live orchestration events
+* realtime node updates
+
+---
+
+# Major Debugging Issue
+
+Encountered:
+
+```text
+websocket timeout during opening handshake
+```
+
+---
+
+# Root Causes
+
+* uvicorn auto-reload restart
+* incomplete backend startup
+* missing database tables
+
+---
+
+# Enterprise Insight
+
+Realtime systems require:
+
+* stable runtime lifecycle
+* connection coordination
+* event durability
+
+---
+
+# Event Streaming Learnings
+
+## Observability Runtime
+
+Implemented:
+
+* workflow event streaming
+* event persistence
+* operational telemetry
+
+---
+
+# Important Insight
+
+Realtime telemetry transforms workflows from:
+
+```text
+black box execution
+```
+
+into:
+
+```text
+observable orchestration systems
+```
+
+---
+
+# Metrics Learnings
+
+## Runtime Analytics
+
+Implemented:
+
+* workflow duration metrics
+* success/failure tracking
+* operational analytics APIs
+
+---
+
+# Important Insight
+
+Enterprise systems MUST answer:
+
+* what failed?
+* what is slow?
+* what is active?
+* what is blocked?
+
+Without observability:
+systems become operationally blind.
+
+---
+
+# Prometheus Learnings
+
+Learned:
+
+* metrics exposure is essential
+* observability is part of architecture
+* monitoring is NOT optional
+
+---
+
+# Enterprise Insight
+
+Modern backend systems require:
+
+* telemetry
+* metrics
+* tracing
+* operational analytics
+
+from day one.
+
+---
+
+# Distributed Systems Learnings
+
+## Most Important Realizations
+
+Enterprise workflow systems require:
+
+* durable state
+* asynchronous execution
+* runtime recovery
+* observability
+* event streaming
+* operational replay
+
+---
+
+# Biggest Architectural Lesson
+
+Infrastructure-first architecture was the CORRECT decision.
+
+Most AI projects start with:
+
+```text
+chat UI
+```
+
+AetherOS started with:
+
+```text
+runtime infrastructure
+```
+
+This creates a significantly stronger foundation.
 
 ---
 
 # Product Engineering Learnings
 
-# Major Realization
+## Product Thinking
 
-AetherOS is NOT:
-- AI feature app
-- chatbot wrapper
-- prompt playground
+Learned:
 
-AetherOS IS:
-- orchestration infrastructure
-- workflow operating system
-- AI execution runtime
-
-This mindset shift is critical.
+* every feature must solve operational problems
+* architecture decisions affect product scalability
+* observability improves product trust
+* replay improves operational support
 
 ---
 
-# Systems Engineering Learnings
+# PM Insight
 
-## Most Important Lesson
+Engineering should always answer:
 
-Enterprise systems are difficult because of:
-- state consistency
-- orchestration durability
-- distributed coordination
-- execution reliability
-
-NOT because of:
-- frontend complexity
-- API generation
+* what business capability does this unlock?
+* how does this scale?
+* what operational problem does this solve?
 
 ---
 
-# Technical Leadership Learnings
+# Current Engineering Level
 
-## Important Realization
+Current project now includes concepts from:
 
-Senior engineers think about:
-- runtime architecture
-- failure recovery
-- operational intelligence
-- system resilience
-- scalability
-
-NOT just:
-- features
+* Temporal
+* Airflow
+* Dagster
+* Prefect
+* enterprise orchestration systems
 
 ---
 
-# Product Management Learnings
+# Biggest Achievements From Phase 1
 
-## Product Thinking Shift
+Successfully built:
 
-Always ask:
-
-- What business problem does this solve?
-- What enterprise capability does this unlock?
-- How does this scale?
-- How does this improve operational intelligence?
-- How does this improve reliability?
+* distributed orchestration runtime
+* durable execution engine
+* replay runtime
+* interrupt runtime
+* realtime telemetry system
+* workflow observability platform
 
 ---
 
-# Career Learnings
+# Key Mindset Shift
 
-This project develops:
+The project is no longer:
 
-- distributed systems engineering
-- orchestration runtime design
-- enterprise architecture thinking
-- platform engineering mindset
-- technical leadership capability
+```text
+AI side project
+```
 
-This is the path toward:
-- AI Infrastructure Engineer
-- Staff Engineer
-- Principal Backend Engineer
-- Distributed Systems Engineer
-````
+It is now:
+
+```text
+enterprise AI systems engineering platform
+```
+
+---
+
+# Next Learning Focus
+
+# PHASE 2 — Discovery Intelligence Engine
+
+Upcoming learnings:
+
+* AI product discovery
+* requirement intelligence
+* conversation orchestration
+* AI planning systems
+* context memory
+* multi-agent intelligence
+
+---
+
+# Final Reflection
+
+Phase 1 proved that:
+
+* infrastructure matters first
+* durability matters
+* observability matters
+* orchestration is difficult
+* distributed systems are essential
+* enterprise architecture requires long-term thinking
+
+This phase built the foundation required for the entire AetherOS vision.

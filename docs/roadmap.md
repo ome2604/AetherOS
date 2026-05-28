@@ -1,458 +1,503 @@
-# AetherOS — Engineering Roadmap
+# AetherOS — Product & Engineering Roadmap
 
-# Product Vision
+# Vision
 
-AetherOS is being built as:
+AetherOS is an enterprise-grade AI Agile Workflow Operating System designed to orchestrate:
 
-- enterprise-grade AI Agile Workflow Operating System
-- distributed orchestration infrastructure
-- graph-native workflow runtime
-- durable AI execution platform
-- enterprise AI operating layer
+* product discovery
+* requirement generation
+* architecture planning
+* sprint decomposition
+* team intelligence
+* execution tracking
+* delivery analytics
+* leadership visibility
 
-This is NOT:
-- a chatbot project
-- an LLM wrapper
-- a demo AI app
-
-This IS:
-- orchestration infrastructure
-- AI runtime platform
-- workflow operating system
+using durable AI orchestration infrastructure.
 
 ---
 
-# MASTER OBJECTIVES
+# Strategic Goals
 
 ## Engineering Goals
-- become strong AI Systems Engineer
-- master distributed systems
-- learn orchestration runtime design
-- understand enterprise infrastructure
-- build production-grade AI systems
 
----
+* become strong AI Systems Engineer
+* learn distributed systems
+* master enterprise backend architecture
+* build durable orchestration systems
+* learn observability engineering
+* build production-grade AI infrastructure
 
 ## Product Goals
-- learn Product Management
-- understand enterprise workflow pain points
-- think like platform architect
-- design scalable execution systems
 
----
+* learn product management
+* learn delivery operations
+* learn platform thinking
+* learn organizational intelligence systems
+* develop CTO-level system thinking
 
 ## Career Goals
-- crack ₹50LPA+ engineering roles
-- become infrastructure-focused AI engineer
-- build Staff Engineer-level thinking
-- develop architecture + leadership skills
+
+* crack ₹50 LPA+ engineering roles
+* build strong engineering portfolio
+* become enterprise AI platform engineer
+* gain architecture interview readiness
 
 ---
 
-# PHASE 1 — Infrastructure Foundation
+# Master Roadmap
 
-## Goal
-Build production-grade orchestration infrastructure.
-
-Status:
-IN PROGRESS 🚧
-
----
-
-# Sprint 1.1 — Redis Runtime
-
-Status:
-COMPLETE ✅
-
-## Objectives
-- setup Redis
-- distributed runtime communication
-- pub/sub foundation
-- event transport layer
-
-## Built
-- Redis integration
-- queue communication
-- runtime messaging
-- distributed communication foundation
-
-## Enterprise Capability Unlocked
-- distributed orchestration
-- event-driven runtime
-- realtime infrastructure foundation
-
-## Engineering Learnings
-- runtime transport systems
-- distributed messaging
-- async communication patterns
+| Phase                                     | Status     |
+| ----------------------------------------- | ---------- |
+| PHASE 1 — Infrastructure Foundation       | ✅ COMPLETE |
+| PHASE 2 — Discovery Intelligence Engine   | 🚧 ACTIVE  |
+| PHASE 3 — Memory + RAG Platform           | ⏳ PLANNED  |
+| PHASE 4 — Realtime Collaboration Platform | ⏳ PLANNED  |
+| PHASE 5 — Team Intelligence Engine        | ⏳ PLANNED  |
+| PHASE 6 — Enterprise Platform Layer       | ⏳ PLANNED  |
+| PHASE 7 — Leadership Intelligence Layer   | ⏳ PLANNED  |
+| PHASE 8 — Interview + Career Positioning  | ⏳ PLANNED  |
 
 ---
 
-# Sprint 1.2 — Celery Distributed Workers
+# PHASE 1 — Infrastructure Foundation ✅ COMPLETE
 
-Status:
-COMPLETE ✅
+## Objective
 
-## Objectives
-- background execution
-- async orchestration
-- retry system
-- worker architecture
-
-## Built
-- Celery workers
-- distributed execution
-- retry infrastructure
-- async workflow runtime
-
-## Enterprise Capability Unlocked
-- scalable execution
-- worker distribution
-- resilient orchestration
-- independent runtime execution
-
-## Engineering Learnings
-- distributed workers
-- task orchestration
-- Windows Celery limitations
-- worker lifecycle management
+Build enterprise-grade orchestration infrastructure.
 
 ---
 
-# Sprint 1.3 — Durable Runtime
+# Sprint 1.1 — Core Backend Foundation ✅
 
-Status:
-COMPLETE ✅
+## Completed
 
-## Objectives
-- workflow persistence
-- checkpointing
-- recovery foundation
-- workflow durability
+* FastAPI setup
+* PostgreSQL integration
+* Redis integration
+* Docker-ready architecture
+* Celery worker foundation
+* workflow APIs
 
-## Built
-- PostgreSQL workflow checkpoints
-- workflow snapshots
-- recovery manager
-- replay foundation
-- workflow state persistence
+## Enterprise Capabilities
 
-## Enterprise Capability Unlocked
-- crash recovery
-- resumable workflows
-- execution durability
-- auditability
-
-## Engineering Learnings
-- checkpoint persistence
-- recovery architecture
-- distributed state consistency
-- orchestration durability
+* scalable backend runtime
+* asynchronous infrastructure
+* distributed task processing
 
 ---
 
-# Sprint 1.4 — LangGraph Runtime
+# Sprint 1.2 — Durable Workflow Foundation ✅
 
-Status:
-COMPLETE (Foundation) ✅
+## Completed
 
-## Objectives
-- graph-native orchestration
-- state-machine execution
-- conditional routing
-- orchestration runtime kernel
+* workflow persistence
+* workflow IDs
+* workflow state management
+* checkpoint storage
 
-## Built
-- LangGraph integration
-- state graph runtime
-- node transitions
-- graph execution engine
-- orchestration state machine
+## Enterprise Capabilities
 
-## Enterprise Capability Unlocked
-- graph-native execution
-- intelligent workflow routing
-- multi-agent orchestration foundation
-- dynamic workflow execution
-
-## Engineering Learnings
-- state-machine architecture
-- orchestration graphs
-- runtime-controlled execution
-- graph-native workflows
+* durable workflows
+* operational persistence
+* resumable execution
 
 ---
 
-# Sprint 1.4 — Durable Graph Runtime
+# Sprint 1.3 — Background Runtime ✅
 
-Status:
-COMPLETE ✅
+## Completed
 
-## Objectives
-- node-level checkpoints
-- durable graph execution
-- replay-ready architecture
-- resumable orchestration
+* Celery orchestration
+* distributed workers
+* background execution
+* async workflow processing
 
-## Built
-- node-level persistence
-- incremental checkpoints
-- durable LangGraph runtime
-- recovery foundation
-- replay foundation
+## Enterprise Capabilities
 
-## Enterprise Capability Unlocked
-- partial workflow recovery
-- graph replay
-- node-level durability
-- orchestration resilience
-
-## Engineering Learnings
-- distributed state consistency
-- durable orchestration
-- incremental persistence
-- runtime recovery systems
+* scalable runtime execution
+* distributed orchestration
+* worker coordination
 
 ---
 
-# CURRENT PROJECT STATUS
+# Sprint 1.4 — LangGraph Durable Runtime ✅
 
-## Completed Infrastructure
+## Completed
 
-### Runtime Layer
-✅ Redis Runtime  
-✅ Celery Workers  
-✅ Async Execution  
-✅ Distributed Communication  
+* LangGraph runtime
+* node execution engine
+* node transitions
+* graph state machine
+* checkpoint persistence
+* node-level recovery
 
----
+## Enterprise Capabilities
 
-### Persistence Layer
-✅ PostgreSQL  
-✅ Workflow Persistence  
-✅ Checkpointing  
-✅ Replay Foundation  
-
----
-
-### Orchestration Layer
-✅ LangGraph Runtime  
-✅ State Machine Execution  
-✅ Graph Routing  
-✅ Node-Level Persistence  
+* enterprise orchestration engine
+* durable workflow execution
+* resumable graph runtime
 
 ---
 
-# CURRENT ARCHITECTURE STATUS
+# Sprint 1.5 — Replay Runtime ✅
 
-```text
-Frontend (Next.js)
-        ↓
-FastAPI API Layer
-        ↓
-Redis Runtime Layer
-        ↓
-Celery Distributed Workers
-        ↓
-LangGraph Runtime
-        ↓
-Durable Runtime Engine
-        ↓
-Checkpoint Persistence
-        ↓
-PostgreSQL
-```
+## Completed
+
+* replay execution
+* workflow recovery
+* orchestration replay
+* runtime restoration
+
+## Enterprise Capabilities
+
+* operational replay
+* recovery debugging
+* auditability
 
 ---
 
-# NEXT EXECUTION PRIORITIES
+# Sprint 1.6 — Interrupt Runtime ✅
 
-# Sprint 1.5 — Replay Runtime
+## Completed
 
-Status:
-NEXT 🚧
+* pause runtime
+* resume runtime
+* human approval gates
+* interrupt orchestration
 
-## Goal
-Introduce orchestration replay + auditability.
+## Enterprise Capabilities
 
-## Planned Build
-- execution timeline
-- workflow replay viewer
-- orchestration audit layer
-- runtime observability
-
-## Why It Matters
-Enterprise systems require:
-- debugging
-- replay
-- execution tracing
-- operational intelligence
+* human-in-loop workflows
+* approval orchestration
+* operational intervention
 
 ---
 
-# Sprint 1.6 — Interrupt Runtime
+# Sprint 1.7 — Realtime Runtime + Observability ✅
 
-Status:
-NEXT 🚧
+## Completed
 
-## Goal
-Support human-in-the-loop orchestration.
+* websocket runtime
+* live orchestration telemetry
+* event streaming
+* workflow event persistence
+* runtime metrics
+* observability APIs
+* operational analytics
 
-## Planned Build
-- pause workflow
-- approval gates
-- workflow resume
-- interruptible execution
+## Enterprise Capabilities
 
-## Why It Matters
-Enterprise AI systems require:
-- human approvals
-- governance
-- workflow control
-
----
-
-# Sprint 1.7 — Realtime Runtime
-
-Status:
-NEXT 🚧
-
-## Goal
-Realtime orchestration streaming.
-
-## Planned Build
-- WebSocket layer
-- live workflow events
-- realtime telemetry
-- execution streaming
-
-## Why It Matters
-Enterprise orchestration platforms require:
-- live visibility
-- operational monitoring
-- realtime execution intelligence
+* realtime orchestration visibility
+* observability platform
+* workflow analytics
+* operational telemetry
 
 ---
 
-# PHASE 2 — AI Workflow Engine
+# PHASE 2 — Discovery Intelligence Engine 🚧 ACTIVE
 
-Status:
-PLANNED 🚧
+## Objective
 
-## Planned Build
-- multi-agent runtime
-- autonomous execution
-- workflow intelligence
-- AI planning engine
-- dynamic orchestration
+Transform AetherOS into an AI Product Discovery system.
 
 ---
 
-# PHASE 3 — Memory + Enterprise RAG
+# Sprint 2.1 — Discovery Conversation Engine
 
-Status:
-PLANNED 🚧
+## Build
 
-## Planned Build
-- Qdrant integration
-- semantic memory
-- enterprise knowledge layer
-- contextual retrieval
-- workflow memory engine
+* discovery conversation runtime
+* AI clarification agent
+* discovery orchestration graph
+* context-aware questioning
+* conversation persistence
+* session management
 
----
+## New Modules
 
-# PHASE 4 — Realtime Platform
+app/discovery/
 
-Status:
-PLANNED 🚧
+* agents/
+* prompts/
+* services/
+* workflows/
+* schemas/
 
-## Planned Build
-- event streaming
-- realtime orchestration
-- live execution visibility
-- operational telemetry
+## Database Tables
 
----
+* discovery_sessions
+* discovery_messages
+* project_contexts
 
-# PHASE 5 — Team Intelligence
+## Enterprise Capabilities
 
-Status:
-PLANNED 🚧
-
-## Planned Build
-- employee matching
-- AI staffing engine
-- delivery intelligence
-- team orchestration
+* AI product discovery
+* requirement clarification
+* business intelligence intake
 
 ---
 
-# PHASE 6 — Enterprise Platform
+# Sprint 2.2 — Requirement Intelligence Engine
 
-Status:
-PLANNED 🚧
+## Build
 
-## Planned Build
-- RBAC
-- multi-tenancy
-- observability
-- governance
-- metrics
-- audit systems
+* PRD generation
+* scope generation
+* epic generation
+* user story generation
+* risk analysis
+* constraint analysis
+
+## Enterprise Capabilities
+
+* AI Product Manager
+* automated requirements engineering
 
 ---
 
-# PHASE 7 — Product + Leadership Layer
+# Sprint 2.3 — Blueprint Intelligence Engine
 
-Status:
-PLANNED 🚧
+## Build
 
-## Planned Build
-- PM analytics
-- execution forecasting
-- workflow optimization
-- delivery intelligence
+* architecture generation
+* infrastructure planning
+* API generation
+* database planning
+* engineering roadmap generation
+
+## Enterprise Capabilities
+
+* AI Solutions Architect
+* technical planning intelligence
+
+---
+
+# Sprint 2.4 — Task Decomposition Engine
+
+## Build
+
+* task breakdown runtime
+* frontend task generation
+* backend task generation
+* infra task generation
+* QA planning
+* DevOps planning
+
+## Enterprise Capabilities
+
+* AI Engineering Manager
+* agile decomposition intelligence
+
+---
+
+# PHASE 3 — Memory + RAG Platform
+
+## Objective
+
+Build enterprise memory infrastructure.
+
+---
+
+# Planned Systems
+
+* Qdrant vector memory
+* semantic retrieval
+* long-term project memory
+* organizational context engine
+* enterprise RAG
+* memory enrichment
+
+## Enterprise Capabilities
+
+* organizational intelligence
+* enterprise knowledge retrieval
+* persistent AI memory
+
+---
+
+# PHASE 4 — Realtime Collaboration Platform
+
+## Objective
+
+Build collaborative operational intelligence platform.
+
+---
+
+# Planned Systems
+
+* collaborative workspaces
+* realtime dashboards
+* live orchestration streams
+* shared execution visibility
+* operational coordination
+
+## Enterprise Capabilities
+
+* realtime delivery intelligence
+* collaborative execution platform
+
+---
+
+# PHASE 5 — Team Intelligence Engine
+
+## Objective
+
+Build workforce intelligence systems.
+
+---
+
+# Planned Systems
+
+* skill graph engine
+* employee matching
+* workload balancing
+* engineering velocity analysis
+* execution optimization
+
+## Enterprise Capabilities
+
+* AI Delivery Manager
+* workforce optimization
+
+---
+
+# PHASE 6 — Enterprise Platform Layer
+
+## Objective
+
+Build enterprise-grade platform controls.
+
+---
+
+# Planned Systems
+
+* RBAC
+* multi-tenancy
+* audit systems
+* organization management
+* security layer
+* compliance systems
+
+## Enterprise Capabilities
+
+* enterprise SaaS platform
+* organizational isolation
+* platform governance
+
+---
+
+# PHASE 7 — Leadership Intelligence Layer
+
+## Objective
+
+Build executive operational intelligence.
+
+---
+
+# Planned Systems
+
+* CTO dashboards
+* delivery forecasting
+* risk intelligence
+* productivity analytics
+* engineering performance tracking
+* leadership visibility
+
+## Enterprise Capabilities
+
+* executive intelligence platform
+* delivery operations analytics
 
 ---
 
 # PHASE 8 — Interview + Career Positioning
 
-Status:
-ONGOING 🚧
+## Objective
 
-## Goal
-Convert AetherOS into:
-- Staff Engineer portfolio
-- AI Infrastructure profile
-- distributed systems showcase
-- architecture leadership project
+Convert project into career leverage.
 
 ---
 
-# ENGINEERING PRIORITIES
+# Focus Areas
 
-Always prioritize:
+* system design storytelling
+* architecture explanations
+* leadership positioning
+* portfolio optimization
+* interview preparation
+* engineering narratives
 
-1. infrastructure
-2. architecture
-3. scalability
-4. durability
-5. enterprise engineering
+## Outcome
 
-Never optimize for:
-- shortcuts
-- temporary hacks
-- demo-only implementations
+Position as:
+
+* AI Systems Engineer
+* Platform Engineer
+* AI Infrastructure Engineer
+* Technical Lead
+* Enterprise AI Architect
 
 ---
 
-# LONG-TERM TARGET
+# Long-Term Product Vision
 
-AetherOS evolves into:
+AetherOS eventually becomes:
 
-- enterprise orchestration platform
-- AI execution operating system
-- graph-native workflow engine
-- distributed AI runtime infrastructure
-- enterprise workflow intelligence platform
+* AI Product Manager
+* AI Solutions Architect
+* AI Engineering Manager
+* AI Delivery Manager
+* AI CTO Dashboard
+
+inside one unified enterprise operating system.
+
+---
+
+# Engineering Rules
+
+Every sprint must answer:
+
+| Question                                        | Required |
+| ----------------------------------------------- | -------- |
+| What business problem does this solve?          | YES      |
+| How does this scale?                            | YES      |
+| What enterprise capability does this unlock?    | YES      |
+| How does this affect architecture?              | YES      |
+| How does this improve operational intelligence? | YES      |
+
+---
+
+# Current Active Sprint
+
+## ACTIVE PHASE
+
+PHASE 2 — Discovery Intelligence Engine
+
+## ACTIVE SPRINT
+
+Sprint 2.1 — Discovery Conversation Engine
+
+## Immediate Priorities
+
+* AI clarification runtime
+* discovery orchestration graph
+* discovery session persistence
+* context memory
+* requirement intelligence foundation
+
+---
+
+# Current Engineering Level
+
+Current project scope now includes:
+
+* distributed systems
+* durable orchestration
+* realtime systems
+* observability engineering
+* enterprise backend architecture
+* AI workflow runtime infrastructure
+* operational intelligence systems
+
+This is significantly beyond standard portfolio projects.

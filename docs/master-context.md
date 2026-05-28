@@ -1,393 +1,413 @@
 # AetherOS — Master Context
 
-You are my AI Engineering + Product + Project Management mentor.
+## Vision
 
-We are building an enterprise-grade AI Agile Workflow Operating System from scratch.
+AetherOS is an enterprise-grade AI Agile Workflow Operating System designed to orchestrate product discovery, requirement generation, project planning, execution management, and delivery intelligence using distributed AI systems.
 
 This is NOT a demo chatbot project.
 
+This project is career infrastructure intended to build:
+
+* strong AI Systems Engineering capability
+* enterprise backend architecture skills
+* distributed systems knowledge
+* product management thinking
+* technical leadership capability
+* production-grade AI infrastructure expertise
+
+Target outcome:
+
+* crack ₹50 LPA+ engineering roles
+* become high-value AI infrastructure engineer
+* learn enterprise platform architecture
+* develop startup-level system design thinking
+
 ---
 
-# PRIMARY GOALS
+# Final Product Flow
 
-The goal is to:
+## Step 1 — Idea Spark
 
-- crack ₹50 LPA+ engineering roles
-- become strong AI Systems Engineer
-- learn Product Management
-- learn Technical Leadership
-- build production-grade AI infrastructure
-- master distributed systems engineering
-- develop enterprise architecture thinking
-- become capable of building scalable AI platforms
+User enters an idea:
 
----
-
-# FINAL PRODUCT FLOW
-
-## Step 1 → Idea Spark
-AI Discovery Conversation
+"We want to build an AI fintech payroll platform"
 
 ↓
 
-## Step 2 → Project Blueprint
-AI Requirement + Planning Generation
+## Step 2 — AI Discovery Conversation
+
+AI asks intelligent clarification questions:
+
+* target users
+* budget
+* deadlines
+* integrations
+* compliance
+* scale requirements
+* infrastructure constraints
+
+This becomes:
+
+AI Product Discovery
 
 ↓
 
-## Step 3 → Team Match
-Employee Search + Task Assignment
+## Step 3 — Requirement Generation
+
+AI generates:
+
+* PRD
+* feature scope
+* constraints
+* risks
+* epics
+* user stories
+
+This becomes:
+
+AI Product Manager
 
 ↓
 
-## Step 4 → Progress Tracker
-Real-Time Task Progress + Completion
+## Step 4 — Project Blueprint
+
+AI generates:
+
+* architecture
+* services
+* APIs
+* infrastructure
+* database schema
+* engineering roadmap
+* sprint plan
+
+This becomes:
+
+AI Solutions Architect
+
+↓
+
+## Step 5 — Task Decomposition
+
+AI converts high-level features into:
+
+* frontend tasks
+* backend tasks
+* DevOps tasks
+* testing tasks
+* infra tasks
+
+This becomes:
+
+AI Engineering Manager
+
+↓
+
+## Step 6 — Team Matching
+
+AI assigns work using:
+
+* skill graphs
+* workload balancing
+* availability
+* velocity tracking
+
+This becomes:
+
+AI Delivery Manager
+
+↓
+
+## Step 7 — Execution Tracking
+
+Realtime tracking of:
+
+* sprint progress
+* blockers
+* delays
+* risks
+* workload imbalance
+* burndown trends
+
+This becomes:
+
+AI CTO Dashboard
+
+↓
+
+## Step 8 — Leadership Dashboard
+
+Operational intelligence for leadership:
+
+* delivery insights
+* engineering performance
+* risk forecasting
+* execution analytics
+* organization-level visibility
 
 ---
 
-# PRODUCT VISION
+# Core Engineering Philosophy
 
-AetherOS is being designed as:
+Always prioritize:
 
-- distributed AI orchestration platform
-- graph-native workflow runtime
-- enterprise execution engine
-- infrastructure-first AI platform
-- durable orchestration system
-- realtime workflow operating system
+1. Infrastructure
+2. Architecture
+3. Scalability
+4. Durability
+5. Enterprise Engineering
 
-This is NOT:
-- a simple chatbot
-- an LLM wrapper
-- a demo AI app
+Never treat this project like:
 
-This IS:
-- orchestration infrastructure
-- AI execution runtime
-- enterprise workflow operating system
+* simple AI wrapper
+* chatbot demo
+* portfolio toy project
 
----
+Treat this project like:
 
-# CORE STACK
-
-## Frontend
-- Next.js
-- TypeScript
-- Tailwind
-- shadcn/ui
-
-## Backend
-- FastAPI
-- PostgreSQL
-- Redis
-- Celery
-- LangGraph
-- Qdrant
-- WebSockets
-- Docker
+* enterprise AI platform
+* scalable orchestration system
+* operational intelligence platform
+* future startup infrastructure
 
 ---
 
-# ARCHITECTURE GOALS
+# Platform Architecture
+
+## Backend Stack
+
+* FastAPI
+* PostgreSQL
+* Redis
+* Celery
+* LangGraph
+* Qdrant
+* WebSockets
+* Docker
+
+## Frontend Stack
+
+* Next.js
+* TypeScript
+* TailwindCSS
+* shadcn/ui
+
+---
+
+# Enterprise Architecture Goals
 
 The platform must support:
 
-- durable workflows
-- distributed workers
-- workflow checkpointing
-- background execution
-- realtime event streaming
-- workflow state persistence
-- replayable execution
-- recovery runtime
-- enterprise RAG
-- graph-native orchestration
-- multi-agent systems
-- multi-tenant isolation
-- observability
-- orchestration auditability
-- AI execution governance
+* durable workflows
+* distributed workers
+* checkpoint persistence
+* replay runtime
+* interrupt runtime
+* realtime telemetry
+* operational observability
+* enterprise RAG
+* multi-agent orchestration
+* multi-tenant isolation
+* AI workflow runtime infrastructure
 
 ---
 
-# MAJOR ARCHITECTURAL DECISIONS
+# Completed Infrastructure (Phase 1)
 
-## 1. Graph-Native Runtime
-Workflows are represented as:
-- state machines
-- execution graphs
-- node transitions
+## Infrastructure Foundation
 
-NOT:
-- sequential Python chains
+Completed systems:
 
-LangGraph is used as orchestration runtime.
+* FastAPI backend
+* PostgreSQL persistence
+* Redis queue infrastructure
+* Celery workers
+* LangGraph orchestration runtime
+* workflow state persistence
+* durable execution
+* checkpoint runtime
+* replay runtime
+* interrupt runtime
+* realtime websocket runtime
+* event persistence
+* workflow telemetry
+* observability APIs
+* runtime metrics
 
----
+Current system capabilities:
 
-## 2. Durable Execution
-Workflow state persists into PostgreSQL.
-
-Goal:
-- survive crashes
-- survive worker failures
-- support resumable execution
-
----
-
-## 3. Distributed Runtime
-Execution is distributed using:
-- Redis
-- Celery workers
-
-Goal:
-- scalability
-- resilience
-- async orchestration
+* distributed orchestration
+* resumable workflows
+* operational replay
+* human-in-loop runtime
+* realtime event streaming
+* orchestration observability
 
 ---
 
-## 4. Node-Level Persistence
-Checkpoint after every orchestration node.
+# Master Roadmap
 
-Example:
+## PHASE 1 — Infrastructure Foundation ✅ COMPLETE
 
-planner
-↓ save checkpoint
+Built:
 
-executor
-↓ save checkpoint
-
-reviewer
-↓ save checkpoint
-
-Goal:
-- replay
-- recovery
-- operational intelligence
+* orchestration runtime
+* durable execution
+* replay engine
+* interrupt runtime
+* realtime runtime
+* observability platform
 
 ---
 
-# PROBLEMS IDENTIFIED IN OLD ARCHITECTURE
+## PHASE 2 — Discovery Intelligence Engine 🚧 ACTIVE
 
-The old system had:
+Build:
 
-- fake queues
-- in-memory state
-- monolithic workflow manager
-- unsafe RAG
-- weak orchestration
-- synchronous execution
-- no durability
-- no replayability
-- no distributed runtime
-
-These are NOT acceptable for enterprise systems.
+* Discovery Agent
+* Clarification Engine
+* Discovery Session Runtime
+* Context Memory
+* Discovery State Graph
+* Requirement Intelligence
 
 ---
 
-# MASTER ROADMAP
+## PHASE 3 — Memory + RAG
 
-## PHASE 1 — Infrastructure Foundation
-Build durable orchestration infrastructure.
+Build:
 
-Includes:
-- FastAPI
-- PostgreSQL
-- Redis
-- Celery
-- workflow persistence
-- checkpointing
-- LangGraph runtime
-- durable execution
-
----
-
-## PHASE 2 — AI Workflow Engine
-Build orchestration intelligence.
-
-Includes:
-- multi-agent execution
-- autonomous planning
-- conditional routing
-- execution reasoning
-
----
-
-## PHASE 3 — Memory + Enterprise RAG
-Build organizational memory layer.
-
-Includes:
-- Qdrant
-- semantic retrieval
-- vector memory
-- contextual execution
+* enterprise RAG
+* semantic memory
+* vector retrieval
+* organizational knowledge engine
+* context enrichment
 
 ---
 
 ## PHASE 4 — Realtime Platform
-Build realtime orchestration system.
 
-Includes:
-- WebSockets
-- event streaming
-- live execution telemetry
+Build:
+
+* realtime dashboards
+* collaborative workspaces
+* live delivery intelligence
+* operational event streaming
 
 ---
 
 ## PHASE 5 — Team Intelligence
-Build organizational execution intelligence.
 
-Includes:
-- employee matching
-- task assignment
-- delivery coordination
+Build:
+
+* employee matching
+* workload balancing
+* skill graph engine
+* engineering velocity intelligence
 
 ---
 
 ## PHASE 6 — Enterprise Platform
-Build enterprise infrastructure layer.
 
-Includes:
-- RBAC
-- observability
-- multi-tenancy
-- governance
-- metrics
+Build:
+
+* RBAC
+* multi-tenancy
+* audit systems
+* enterprise security
+* organization management
 
 ---
 
 ## PHASE 7 — Product + Leadership Layer
-Build strategic execution intelligence.
 
-Includes:
-- PM analytics
-- delivery forecasting
-- execution intelligence
-- optimization systems
+Build:
+
+* CTO dashboards
+* delivery intelligence
+* engineering analytics
+* risk prediction
+* leadership insights
 
 ---
 
 ## PHASE 8 — Interview + Career Positioning
-Convert project into career infrastructure.
 
-Goal:
-- Staff Engineer positioning
-- AI Infrastructure Engineer profile
-- System Design mastery
-- Leadership readiness
+Prepare:
 
----
-
-# CURRENT STATUS
-
-## COMPLETED
-
-### Sprint 1.1 — Redis Runtime
-- Redis integration
-- distributed communication
-- pub/sub foundation
-
-### Sprint 1.2 — Celery Distributed Workers
-- async execution
-- worker orchestration
-- retry infrastructure
-
-### Sprint 1.3 — Durable Runtime
-- PostgreSQL checkpoints
-- workflow persistence
-- recovery foundation
-
-### Sprint 1.4 — LangGraph Runtime
-- graph-native orchestration
-- node-level execution
-- durable graph runtime
-- node checkpoints
+* system design interviews
+* architecture storytelling
+* leadership positioning
+* engineering portfolio
+* enterprise project presentation
 
 ---
 
-# CURRENT ARCHITECTURE
+# Development Rules
 
-Frontend (Next.js)
-        ↓
-FastAPI API Layer
-        ↓
-Redis Runtime Layer
-        ↓
-Celery Distributed Workers
-        ↓
-LangGraph Runtime
-        ↓
-Durable Runtime Engine
-        ↓
-Checkpoint Persistence
-        ↓
-PostgreSQL
+Every sprint must answer:
+
+| Question                                        | Required |
+| ----------------------------------------------- | -------- |
+| What business problem does this solve?          | YES      |
+| How does this scale?                            | YES      |
+| What enterprise capability does this unlock?    | YES      |
+| How does this affect architecture?              | YES      |
+| How does this improve operational intelligence? | YES      |
 
 ---
 
-# CURRENT ENGINEERING FOCUS
+# Current Active Focus
 
-Always prioritize:
+## Current Phase
 
-1. infrastructure
-2. architecture
-3. scalability
-4. durability
-5. enterprise engineering
+PHASE 2 — Discovery Intelligence Engine
 
-NEVER optimize for:
-- shortcuts
-- demos
-- temporary hacks
+## Immediate Sprint
 
----
+Sprint — Discovery Conversation Engine
 
-# ENGINEERING MINDSET
+Build:
 
-Think like:
-- Staff Engineer
-- Principal Backend Engineer
-- Distributed Systems Engineer
-- AI Infrastructure Architect
-- Technical Product Leader
+* discovery conversations
+* AI clarification runtime
+* session persistence
+* project context memory
+* discovery orchestration graph
+* requirement intelligence foundation
 
 ---
 
-# PRODUCT MINDSET
+# Long-Term Goal
 
-Always ask:
+AetherOS should eventually function as:
 
-- What business problem does this solve?
-- How does this scale?
-- What enterprise capability does this unlock?
-- How does this improve operational intelligence?
-- How does this affect reliability?
-- How does this affect orchestration durability?
+* AI Product Manager
+* AI Solutions Architect
+* AI Engineering Manager
+* AI Delivery Manager
+* AI CTO Dashboard
+
+inside a unified enterprise operating system.
 
 ---
 
-# CAREER POSITIONING
+# Final Mindset
 
-This project is:
-- career infrastructure
-- systems engineering training
-- technical leadership training
-- architecture training
+This project is now:
+
+career infrastructure
 
 NOT:
-- random side project
 
-If executed consistently, this project develops:
-- strong engineering profile
-- distributed systems knowledge
-- enterprise architecture skills
-- PM mindset
-- technical leadership thinking
-- AI infrastructure expertise
+random side project
 
-This is the path toward:
-- high-value engineering roles
-- AI infrastructure engineering
-- Staff/Principal-level growth
-- enterprise AI systems architecture
+Consistent execution of this roadmap naturally builds:
+
+* enterprise engineering skills
+* system design capability
+* technical leadership thinking
+* product management mindset
+* scalable architecture knowledge
+
+This is the exact combination required for high-paying AI infrastructure and platform engineering roles.

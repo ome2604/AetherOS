@@ -1,618 +1,681 @@
-# `docs/product-decisions.md`
-
-````md id="product001"
 # AetherOS — Product Decisions
 
-# Purpose Of This Document
+# Purpose
 
-This document tracks:
+This document captures:
 
-- enterprise user problems
-- product priorities
-- workflow pain points
-- UX decisions
-- platform strategy
-- KPI thinking
-- execution intelligence goals
+* product thinking
+* strategic decisions
+* feature prioritization
+* UX reasoning
+* platform direction
+* business logic
+* operational goals
 
-Goal:
-Develop Product Management + Technical Leadership thinking.
+The objective is to develop:
+
+* Product Manager mindset
+* Technical Product thinking
+* Platform strategy understanding
+* Leadership-level decision making
 
 ---
 
-# Product Vision
+# Core Product Vision
 
 AetherOS is designed as:
 
-- enterprise AI workflow operating system
-- orchestration intelligence platform
-- execution coordination runtime
-- AI-powered delivery infrastructure
-
-This is NOT:
-- a chatbot product
-- an LLM playground
-- a simple automation tool
-
-This IS:
-- enterprise execution infrastructure
-- AI orchestration platform
-- workflow intelligence system
-
----
-
-# Core User Problem
-
-# Problem Statement
-
-Modern teams struggle with:
-
-- fragmented execution
-- unclear planning
-- poor task ownership
-- lack of visibility
-- weak coordination
-- disconnected tooling
-- delivery unpredictability
-
-Current enterprise workflows are:
-- manual
-- reactive
-- disconnected
-- non-intelligent
-
----
-
-# AetherOS Product Goal
-
-Transform:
-
 ```text
-idea → chaos
+Enterprise AI Workflow Operating System
 ```
 
-Into:
+NOT:
 
 ```text
-idea
-↓
-AI discovery
-↓
-execution planning
-↓
-team coordination
-↓
-delivery tracking
-↓
+AI chatbot
+```
+
+The platform aims to orchestrate:
+
+* product discovery
+* requirements engineering
+* project planning
+* engineering execution
+* delivery intelligence
+* leadership visibility
+
+inside one unified AI operating system.
+
+---
+
+# Strategic Product Goal
+
+The long-term goal is to build a platform that functions as:
+
+| Role                | AI Capability         |
+| ------------------- | --------------------- |
+| Product Manager     | discovery + PRDs      |
+| Solutions Architect | system planning       |
+| Engineering Manager | task decomposition    |
+| Delivery Manager    | team coordination     |
+| CTO Dashboard       | delivery intelligence |
+
+---
+
+# Why Infrastructure First?
+
+## Decision
+
+Build orchestration infrastructure BEFORE business intelligence.
+
+---
+
+# Reasoning
+
+Most AI projects fail because:
+
+* no durability
+* no observability
+* no orchestration
+* no recovery
+* no scalability
+
+Building AI intelligence on weak infrastructure creates:
+
+* unreliable systems
+* unstable execution
+* operational failures
+
+---
+
+# Product Insight
+
+Enterprise users trust:
+
+```text
+reliable systems
+```
+
+more than:
+
+```text
+fancy AI demos
+```
+
+Infrastructure reliability is a product feature.
+
+---
+
+# Why Durable Workflows?
+
+## Decision
+
+Implement:
+
+* checkpoints
+* replay runtime
+* recovery engine
+* resumable execution
+
+early in the project.
+
+---
+
+# Product Reasoning
+
+Enterprise workflows are:
+
+* long-running
+* failure-prone
+* operationally critical
+
+Without durability:
+
+* workflows fail permanently
+* execution history is lost
+* debugging becomes impossible
+
+---
+
+# Business Capability Unlocked
+
+Durability enables:
+
+* enterprise trust
+* operational reliability
+* workflow recovery
+* execution auditability
+
+---
+
+# Why Replay Runtime?
+
+## Decision
+
+Store orchestration history and replay execution paths.
+
+---
+
+# Product Reasoning
+
+Enterprise organizations require:
+
+* audit systems
+* execution traceability
+* operational debugging
+* compliance visibility
+
+Replay runtime becomes:
+
+```text
 operational intelligence
 ```
 
 ---
 
-# Primary User Personas
-
-# 1. Engineering Manager
-
-## Problems
-- difficult sprint coordination
-- poor visibility into execution
-- unclear ownership
-- unpredictable delivery
-
-## Product Value
-AetherOS provides:
-- AI-assisted planning
-- execution visibility
-- orchestration intelligence
-- workflow observability
-
----
-
-# 2. Product Manager
-
-## Problems
-- translating ideas into execution
-- aligning teams
-- prioritization complexity
-- delivery uncertainty
-
-## Product Value
-AetherOS provides:
-- AI requirement generation
-- roadmap intelligence
-- execution coordination
-- delivery forecasting
-
----
-
-# 3. Engineering Teams
-
-## Problems
-- fragmented tasks
-- unclear context
-- poor coordination
-- workflow overload
-
-## Product Value
-AetherOS provides:
-- intelligent task assignment
-- execution guidance
-- centralized workflow runtime
-- realtime collaboration
-
----
-
-# 4. Enterprise Leadership
-
-## Problems
-- lack of operational intelligence
-- delivery unpredictability
-- poor execution transparency
-
-## Product Value
-AetherOS provides:
-- workflow analytics
-- execution telemetry
-- orchestration visibility
-- delivery intelligence
-
----
-
-# Major Product Decisions
-
-# Decision 1 — Infrastructure First
+# Why Interrupt Runtime?
 
 ## Decision
-Prioritize:
-- orchestration infrastructure
-- runtime architecture
-- durability
-- distributed execution
 
-BEFORE:
-- flashy AI features
+Build pause/resume + approval systems.
 
 ---
 
-## Why
+# Product Reasoning
 
-Most AI apps fail because:
-- weak infrastructure
-- no durability
-- poor orchestration
-- no scalability
+Real enterprise workflows require:
 
-We are optimizing for:
-- enterprise reliability
-- long-term scalability
-- platform architecture
+* human approvals
+* governance
+* compliance checks
+* operational intervention
+
+AI systems cannot be fully autonomous in enterprise environments.
 
 ---
 
-# Decision 2 — Graph-Native Workflow System
+# Product Insight
+
+Human-in-loop capability increases:
+
+* enterprise trust
+* operational control
+* compliance readiness
+
+---
+
+# Why Realtime Runtime?
 
 ## Decision
-Represent workflows as:
-- state graphs
-- execution nodes
-- orchestration runtime
+
+Build websocket telemetry + live orchestration events.
+
+---
+
+# Product Reasoning
+
+Enterprise execution should NEVER feel like:
+
+```text
+black box execution
+```
+
+Users need visibility into:
+
+* workflow progress
+* node execution
+* delays
+* failures
+* operational state
+
+---
+
+# Business Capability Unlocked
+
+Realtime systems improve:
+
+* user trust
+* operational transparency
+* execution confidence
+
+---
+
+# Why Observability APIs?
+
+## Decision
+
+Build metrics + telemetry APIs early.
+
+---
+
+# Product Reasoning
+
+Operational intelligence is a core product capability.
+
+Enterprise platforms must answer:
+
+* what failed?
+* what is slow?
+* what is blocked?
+* what is active?
+* where are bottlenecks?
+
+---
+
+# Product Insight
+
+Observability is not:
+
+```text
+engineering luxury
+```
+
+It is:
+
+```text
+core enterprise product functionality
+```
+
+---
+
+# Why Discovery Intelligence Is Next
+
+## Decision
+
+After infrastructure:
+build AI discovery intelligence.
+
+---
+
+# Product Reasoning
+
+The biggest failure in software projects is:
+
+```text
+poor requirement discovery
+```
 
 NOT:
-- linear automation chains
+
+```text
+coding
+```
+
+Most project failures happen because:
+
+* requirements are unclear
+* stakeholders are misaligned
+* scope is incomplete
+* risks are hidden
 
 ---
 
-## Why
+# Product Insight
 
-Graph-native systems support:
-- dynamic routing
-- agent orchestration
-- intelligent execution
-- workflow evolution
+Discovery intelligence creates:
 
-This creates:
-- scalable orchestration
-- enterprise flexibility
+* better planning
+* better execution
+* reduced delivery risk
 
 ---
 
-# Decision 3 — Durable Runtime
+# Why AI Product Discovery?
 
 ## Decision
-Persist workflow state after every node.
+
+AI should clarify business context before planning.
 
 ---
 
-## Why
+# Product Reasoning
 
-Enterprise workflows must:
-- survive crashes
-- resume execution
-- support replay
-- maintain auditability
+Users usually provide:
 
-Durability is mandatory for:
-- enterprise trust
-- operational resilience
+```text
+incomplete ideas
+```
+
+The system should intelligently ask:
+
+* who are the users?
+* what scale is required?
+* what integrations exist?
+* what compliance is needed?
+* what constraints exist?
 
 ---
 
-# Decision 4 — Distributed Execution
+# Business Capability Unlocked
+
+This transforms AetherOS into:
+
+```text
+AI Product Manager
+```
+
+---
+
+# Why Requirement Intelligence?
 
 ## Decision
-Use:
-- Redis
-- Celery workers
 
-for orchestration runtime.
+Automatically generate:
 
----
-
-## Why
-
-Distributed systems provide:
-- scalability
-- reliability
-- workload distribution
-- async orchestration
-
-This unlocks:
-- enterprise-scale execution
+* PRDs
+* features
+* epics
+* risks
+* constraints
 
 ---
 
-# Decision 5 — Human-In-The-Loop AI
+# Product Reasoning
+
+Requirement engineering is:
+
+* time-consuming
+* inconsistent
+* error-prone
+
+AI-generated requirements improve:
+
+* planning speed
+* execution alignment
+* engineering clarity
+
+---
+
+# Why Blueprint Intelligence?
 
 ## Decision
-Future workflows support:
-- approvals
-- interruptions
-- manual review
-- workflow pause/resume
+
+AI generates:
+
+* architecture
+* APIs
+* DB schema
+* infra plans
+* engineering roadmap
 
 ---
 
-## Why
+# Product Reasoning
 
-Enterprise AI cannot be:
-- fully autonomous
-- uncontrolled
-- unauditable
+Most startups fail because:
 
-Human oversight is critical.
+* architecture decisions are weak
+* planning is reactive
+* scaling is ignored
+
+AI architecture planning improves:
+
+* engineering alignment
+* delivery speed
+* scalability planning
 
 ---
 
-# Decision 6 — Enterprise RAG
+# Why Task Decomposition Engine?
 
 ## Decision
-Build organizational memory using:
-- Qdrant
-- vector retrieval
-- semantic context
+
+Convert large features into engineering tasks.
 
 ---
 
-## Why
+# Product Reasoning
 
-Enterprise execution requires:
-- contextual intelligence
-- organizational memory
-- workflow-aware retrieval
+Most project bottlenecks happen because:
 
-Simple prompt injection is insufficient.
-
----
-
-# Feature Priority Framework
-
-# Tier 1 — Core Infrastructure
-Highest Priority ✅
-
-Includes:
-- FastAPI
-- Redis
-- Celery
-- PostgreSQL
-- LangGraph
-- durable runtime
-
-Reason:
-Without infrastructure:
-product cannot scale.
+* tasks are too large
+* ownership is unclear
+* execution visibility is weak
 
 ---
 
-# Tier 2 — Orchestration Intelligence
-High Priority 🚧
+# Business Capability Unlocked
 
-Includes:
-- multi-agent orchestration
-- workflow routing
-- replay runtime
-- interrupt runtime
+Transforms AetherOS into:
 
-Reason:
-Core execution intelligence layer.
+```text
+AI Engineering Manager
+```
 
 ---
 
-# Tier 3 — Enterprise Memory
-High Priority 🚧
+# Why Team Intelligence?
 
-Includes:
-- semantic retrieval
-- enterprise RAG
-- contextual workflows
+## Decision
 
-Reason:
-AI systems require memory.
+Build:
 
----
-
-# Tier 4 — Realtime Platform
-Medium Priority 🚧
-
-Includes:
-- WebSockets
-- live telemetry
-- realtime execution
-
-Reason:
-Operational visibility layer.
+* employee matching
+* workload balancing
+* skill graphs
+* velocity intelligence
 
 ---
 
-# Tier 5 — Enterprise Governance
-Medium Priority 🚧
+# Product Reasoning
 
-Includes:
-- RBAC
-- multi-tenancy
-- auditability
-- observability
+Enterprise delivery problems are often:
 
-Reason:
-Required for enterprise adoption.
-
----
-
-# UX Decisions
-
-# Decision 1 — Workflow-Centric UX
-
-## UX Model
-
-User sees:
-- workflow state
-- execution graph
-- task progress
-- orchestration timeline
+* resource allocation problems
+* workload imbalance problems
+* visibility problems
 
 NOT:
-- isolated chat windows
+pure engineering problems.
 
 ---
 
-## Why
+# Business Capability Unlocked
 
-Enterprise users care about:
-- execution
-- delivery
-- coordination
+Transforms AetherOS into:
+
+```text
+AI Delivery Manager
+```
+
+---
+
+# Why Leadership Dashboard?
+
+## Decision
+
+Build executive operational analytics.
+
+---
+
+# Product Reasoning
+
+Leadership needs:
+
+* delivery forecasting
+* execution visibility
+* engineering analytics
+* risk intelligence
+
+without reading raw engineering systems.
+
+---
+
+# Business Capability Unlocked
+
+Transforms AetherOS into:
+
+```text
+AI CTO Dashboard
+```
+
+---
+
+# UX Philosophy
+
+The platform UX should feel:
+
+* operational
+* intelligent
+* realtime
+* enterprise-grade
+* workflow-native
 
 NOT:
-- chatting with AI
+
+* chatbot-centric
+* toy-like
+* prompt-box-only
 
 ---
 
-# Decision 2 — Realtime Visibility
+# Product Prioritization Strategy
 
-## UX Model
+## Priority Order
 
-Live updates:
-- workflow progress
-- node execution
-- task completion
-- runtime telemetry
-
----
-
-## Why
-
-Realtime visibility improves:
-- operational trust
-- coordination
-- delivery transparency
+| Priority | Focus                |
+| -------- | -------------------- |
+| 1        | Infrastructure       |
+| 2        | Durability           |
+| 3        | Observability        |
+| 4        | AI Intelligence      |
+| 5        | Collaboration        |
+| 6        | Enterprise Controls  |
+| 7        | Leadership Analytics |
 
 ---
 
-# Decision 3 — Graph Visualization
+# Why This Priority Order?
 
-## UX Model
+Because:
 
-Visual workflow graph:
-- planner
-- executor
-- reviewer
-- approvals
-
----
-
-## Why
-
-Graphs improve:
-- execution understanding
-- workflow debugging
-- orchestration visibility
+```text
+AI intelligence without infrastructure
+creates unstable products
+```
 
 ---
 
-# Decision 4 — AI As Execution Copilot
+# Key Product Lessons Learned
 
-## UX Model
+## Lesson 1
 
-AI assists:
-- planning
-- coordination
-- assignment
-- optimization
-
-NOT:
-- random conversation
+Infrastructure IS product value.
 
 ---
 
-## Why
+## Lesson 2
 
-Enterprise value comes from:
-- execution intelligence
-- delivery acceleration
-- workflow optimization
+Observability improves user trust.
 
 ---
 
-# KPI Ideas
+## Lesson 3
 
-# Infrastructure KPIs
-
-## Workflow Reliability
-Measure:
-- successful execution %
-- recovery success %
-- retry success %
+Durability improves enterprise adoption.
 
 ---
 
-## Runtime Durability
-Measure:
-- workflow recovery rate
-- checkpoint success rate
-- replay consistency
+## Lesson 4
+
+Realtime visibility improves operational confidence.
 
 ---
 
-## Scalability Metrics
-Measure:
-- concurrent workflows
-- worker throughput
-- queue latency
+## Lesson 5
+
+Workflow systems require distributed architecture.
 
 ---
 
-# Product KPIs
+# Current Product Stage
 
-## Planning Efficiency
-Measure:
-- planning time reduction
-- roadmap generation speed
+## Current State
 
----
+AetherOS is currently:
 
-## Delivery Intelligence
-Measure:
-- task completion predictability
-- workflow bottlenecks
-- execution delays
+```text
+Enterprise Workflow Runtime Platform
+```
 
 ---
 
-## Team Coordination
-Measure:
-- assignment efficiency
-- workflow visibility
-- execution clarity
+# Next Evolution
 
----
+PHASE 2 transforms the platform into:
 
-# AI KPIs
-
-## Retrieval Quality
-Measure:
-- RAG accuracy
-- retrieval relevance
-- workflow context quality
-
----
-
-## Orchestration Intelligence
-Measure:
-- execution routing quality
-- workflow optimization
-- retry intelligence
+```text
+AI Product Discovery Platform
+```
 
 ---
 
 # Long-Term Product Direction
 
-AetherOS evolves into:
-
-- AI workflow operating system
-- orchestration intelligence platform
-- enterprise execution runtime
-- delivery optimization engine
-- autonomous coordination infrastructure
-
----
-
-# Strategic Product Insight
-
-Most AI products optimize:
-- conversation
-- prompting
-- generation
-
-AetherOS optimizes:
-- execution
-- orchestration
-- coordination
-- delivery intelligence
-
-This creates MUCH higher enterprise value.
-
----
-
-# Most Important Product Realization
-
-The real enterprise problem is NOT:
+The final platform should function as:
 
 ```text
-"how to chat with AI"
+Operating System for Software Delivery
 ```
 
-The real enterprise problem is:
+where AI orchestrates:
+
+* planning
+* architecture
+* execution
+* delivery intelligence
+* operational visibility
+
+inside one unified platform.
+
+---
+
+# KPI Ideas
+
+## Infrastructure KPIs
+
+* workflow success rate
+* workflow recovery rate
+* average execution duration
+* runtime latency
+* event throughput
+
+---
+
+# Product Intelligence KPIs
+
+* discovery completion rate
+* PRD generation quality
+* task decomposition accuracy
+* delivery prediction quality
+
+---
+
+# Team Intelligence KPIs
+
+* workload balance
+* sprint completion rate
+* engineering velocity
+* delivery risk reduction
+
+---
+
+# Leadership KPIs
+
+* delivery forecast accuracy
+* operational visibility
+* engineering efficiency
+* organizational execution health
+
+---
+
+# Final Product Insight
+
+The strongest realization from Phase 1:
 
 ```text
-"how to coordinate execution intelligently"
+Enterprise AI systems are operational systems,
+not just AI interfaces.
 ```
 
-THAT is the actual market opportunity.
-
----
-
-# Technical Leadership Learnings
-
-Strong technical leaders think about:
-
-- operational intelligence
-- reliability
-- workflow visibility
-- execution durability
-- scalability
-- organizational coordination
-
-NOT just:
-- features
-
----
-
-# Long-Term Vision
-
-AetherOS becomes:
-
-- enterprise AI orchestration platform
-- workflow operating system
-- execution intelligence engine
-- AI-powered delivery infrastructure
-- enterprise coordination runtime
-````
+That insight now drives the entire AetherOS direction.
