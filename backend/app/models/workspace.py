@@ -1,10 +1,11 @@
 import uuid
 
-from datetime import datetime
-
 from sqlalchemy import (
+
     Column,
+
     String,
+
     DateTime,
 )
 
@@ -12,11 +13,14 @@ from sqlalchemy.dialects.postgresql import (
     UUID,
 )
 
+from sqlalchemy.sql import func
+
 from app.db.base_class import Base
 
-class Workflow(Base):
 
-    __tablename__ = "workflows"
+class Workspace(Base):
+
+    __tablename__ = "workspaces"
 
     id = Column(
 
@@ -34,25 +38,17 @@ class Workflow(Base):
         nullable=False,
     )
 
-    status = Column(
-
-        String,
-
-        default="pending",
+    description = Column(
+        String
     )
 
-    interrupt_reason = Column(
-
-        String,
-
-        nullable=True,
+    owner_id = Column(
+        String
     )
 
     created_at = Column(
 
-        DateTime,
+        DateTime(timezone=True),
 
-        default=datetime.utcnow,
-
-        nullable=False,
+        server_default=func.now(),
     )

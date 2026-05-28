@@ -1,19 +1,15 @@
 from sqlalchemy import create_engine
 
-from sqlalchemy.ext.declarative import (
-    declarative_base,
-)
-
-from sqlalchemy.orm import (
-    sessionmaker,
-)
+from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
 
-DATABASE_URL = (
-    settings.DATABASE_URL
-)
+# =========================================
+# DATABASE CONFIG
+# =========================================
+
+DATABASE_URL = settings.DATABASE_URL
 
 print(DATABASE_URL)
 
@@ -21,16 +17,14 @@ engine = create_engine(
     DATABASE_URL
 )
 
+# IMPORTANT:
+# Prevent DetachedInstanceError
 SessionLocal = sessionmaker(
-
     autocommit=False,
-
     autoflush=False,
-
+    expire_on_commit=False,
     bind=engine,
 )
-
-Base = declarative_base()
 
 
 # =========================================

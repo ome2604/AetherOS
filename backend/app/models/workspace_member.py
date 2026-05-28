@@ -1,12 +1,13 @@
 import uuid
 
-from datetime import datetime
-
 from sqlalchemy import (
+
     Column,
+
     String,
+
     DateTime,
-    Text,
+
     ForeignKey,
 )
 
@@ -14,12 +15,15 @@ from sqlalchemy.dialects.postgresql import (
     UUID,
 )
 
+from sqlalchemy.sql import func
+
 from app.db.base_class import Base
 
-class DiscoveryMessage(Base):
+
+class WorkspaceMember(Base):
 
     __tablename__ = (
-        "discovery_messages"
+        "workspace_members"
     )
 
     id = Column(
@@ -31,32 +35,26 @@ class DiscoveryMessage(Base):
         default=uuid.uuid4,
     )
 
-    session_id = Column(
+    workspace_id = Column(
 
         UUID(as_uuid=True),
 
         ForeignKey(
-            "discovery_sessions.id"
+            "workspaces.id"
         ),
     )
 
-    role = Column(
-
-        String,
-
-        nullable=False,
+    user_id = Column(
+        String
     )
 
-    content = Column(
-
-        Text,
-
-        nullable=False,
+    role = Column(
+        String
     )
 
     created_at = Column(
 
-        DateTime,
+        DateTime(timezone=True),
 
-        default=datetime.utcnow,
+        server_default=func.now(),
     )

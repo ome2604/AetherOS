@@ -49,6 +49,22 @@ from app.api.routes.discovery_ws import (
 )
 
 # =========================================
+# COLLABORATION ROUTES
+# =========================================
+
+from app.api.routes.workspaces import (
+    router as workspace_router,
+)
+
+# =========================================
+# COPILOT ROUTES
+# =========================================
+
+from app.api.routes.copilots import (
+    router as copilot_router,
+)
+
+# =========================================
 # FASTAPI APP
 # =========================================
 
@@ -56,7 +72,7 @@ app = FastAPI(
 
     title="AetherOS",
 
-    version="2.4.0",
+    version="2.6.0",
 
     description=(
 
@@ -157,6 +173,22 @@ app.include_router(
     discovery_ws_router
 )
 
+# -----------------------------------------
+# WORKSPACES
+# -----------------------------------------
+
+app.include_router(
+    workspace_router
+)
+
+# -----------------------------------------
+# AI COPILOTS
+# -----------------------------------------
+
+app.include_router(
+    copilot_router
+)
+
 # =========================================
 # PROMETHEUS METRICS
 # =========================================
@@ -174,22 +206,25 @@ def root():
 
     return {
 
-        "message": (
-            "AetherOS Running"
-        ),
+        "message":
+            "AetherOS Running",
 
-        "runtime": "active",
+        "runtime":
+            "active",
 
         "platform": (
+
             "Enterprise AI Workflow "
             "Operating System"
         ),
 
-        "version": "2.4.0",
+        "version":
+            "2.6.0",
 
         "phase": (
+
             "PHASE 2 - "
-            "Discovery Intelligence Engine"
+            "Collaborative Intelligence"
         ),
     }
 
@@ -202,7 +237,8 @@ def health():
 
     return {
 
-        "status": "healthy",
+        "status":
+            "healthy",
 
         "services": {
 
@@ -230,10 +266,13 @@ def health():
             "discovery_realtime":
                 "enabled",
 
-            "websocket_runtime":
+            "workspace_runtime":
                 "enabled",
 
-            "checkpoint_runtime":
+            "copilot_runtime":
+                "enabled",
+
+            "multi_agent_runtime":
                 "enabled",
 
             "observability":
@@ -283,7 +322,13 @@ def runtime_info():
         "organizational_memory":
             "enabled",
 
-        "realtime_discovery_workspace":
+        "workspace_collaboration":
+            "enabled",
+
+        "copilot_runtime":
+            "enabled",
+
+        "multi_agent_orchestration":
             "enabled",
     }
 
@@ -330,6 +375,12 @@ def platform_info():
 
             "ai_runtime":
                 "OpenAI",
+
+            "collaboration_runtime":
+                "Workspace Intelligence",
+
+            "copilot_runtime":
+                "Multi-Agent AI Runtime",
         },
 
         "capabilities": [
@@ -352,17 +403,29 @@ def platform_info():
 
             "Structured Context Extraction",
 
-            "Discovery State Machine",
-
             "Realtime AI Streaming",
 
             "Collaborative Discovery",
 
             "Live Intelligence Updates",
 
-            "Operational AI Workspace",
-
             "Organizational Intelligence",
+
+            "Workspace Collaboration",
+
+            "Audit Logging",
+
+            "AI Copilots",
+
+            "Planning Agents",
+
+            "Architecture Agents",
+
+            "Risk Agents",
+
+            "Execution Agents",
+
+            "Multi-Agent Orchestration",
         ],
     }
 
@@ -419,5 +482,49 @@ def discovery_runtime():
             "Operational AI Workspace",
 
             "Organizational Memory",
+        ],
+    }
+
+# =========================================
+# COPILOT RUNTIME INFO
+# =========================================
+
+@app.get("/copilots/runtime")
+def copilots_runtime():
+
+    return {
+
+        "status":
+            "active",
+
+        "runtime":
+            "Multi-Agent Copilot Runtime",
+
+        "agents": [
+
+            "Product Copilot",
+
+            "Architecture Copilot",
+
+            "Planning Copilot",
+
+            "Risk Copilot",
+
+            "Execution Copilot",
+        ],
+
+        "capabilities": [
+
+            "Product Intelligence",
+
+            "Architecture Analysis",
+
+            "Sprint Planning",
+
+            "Risk Detection",
+
+            "Execution Guidance",
+
+            "Multi-Agent Collaboration",
         ],
     }
